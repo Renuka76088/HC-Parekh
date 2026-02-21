@@ -8,15 +8,6 @@ import { Megaphone, Instagram, Facebook, Linkedin, Youtube, Mail, Info } from 'l
 export default function OurHiring() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-    const sectors = [
-        "Textile & Garments",
-        "Pulp & Paper Industry",
-        "Medical & Healthcare",
-        "F.M.C.G.",
-        "Industrial & Corporate Projects",
-        "Tenders and M.O.U."
-    ];
-
     const platforms = [
         {
             name: "LinkedIn",
@@ -28,6 +19,62 @@ export default function OurHiring() {
         { name: "Instagram", icon: Instagram, color: "text-pink-600" },
         { name: "Youtube", icon: Youtube, color: "text-red-600" },
         { name: "Other Platforms", icon: Megaphone, color: "text-slate-600" }
+    ];
+
+    const sectors = [
+        "Textile & Garments",
+        "Pulp & Paper Industry",
+        "Medical & Healthcare",
+        "F.M.C.G.",
+        "Industrial & Corporate Projects",
+        "Tenders and M.O.U."
+    ];
+
+    const hiringPositions = [
+        {
+            id: "hr-manager",
+            type: "full-time",
+            badge: "Management",
+            title: "HR Manager",
+            location: "Bengaluru, Karnataka",
+            ctc: "Rs. 5.25 L.P.A.",
+            essentialCriteria: [
+                "Preferably MBA (HR) or any Graduate with at least 8 years net experience in End-To-End recruitment of Technical and Non-Technical Manpower in different profiles in any Manufacturing Industries or Corporate Sectors (other than OPC).",
+                "Should have proficiency in English, Hindi and Regional language equally.",
+                "Should be acquainted with official Tour & Travel within India."
+            ],
+            responsibilities: [
+                "End-to-End Recruitment of Technical and Non-Technical Manpower (CV Invitation, Short-listing, 3-Round Interviews, On-boarding & Induction).",
+                "Pay-Roll Management, Leave, EPF, ESI, Labour Law Compliance.",
+                "Re-Location of Manpower, Relieving and Full & Final Settlement.",
+                "Plan, coordinate and organize campus Interviews in different Colleges and Universities as required."
+            ],
+            notes: [
+                "This is not a Placement Consultancy.",
+                "Hiring process opens till appointment of the deserving candidate by 3-Round interview."
+            ],
+            email: "hemant.parekh2012@gmail.com"
+        },
+        {
+            id: "influencer",
+            type: "campaign",
+            badge: "Social Media",
+            title: "Social Media Influencer",
+            subtitle: "Brand Promotion",
+            description: "Experienced Social Media Influencers irrespective of locations are required for our long-term Online Business Advertisements (informative) on their own social media platforms for our tangible and intangible products.",
+            sectors: sectors,
+            platforms: platforms,
+            submissionDetails: [
+                "Quotation must be in PDF format.",
+                "Excludes 3rd Party & GST.",
+                "Include Payment Terms & Conditions."
+            ],
+            importantNotes: [
+                "Influencers are not responsible for marketing our products.",
+                "We will provide well-designed advertisements ready for posting."
+            ],
+            email: "hemant.parekh2012@gmail.com"
+        }
     ];
 
 
@@ -42,122 +89,213 @@ export default function OurHiring() {
                     <div className="p-3 md:p-12">
 
                         {/* Header Section */}
-                        <div className="border-b border-slate-200 pb-8 mb-8">
+                        <div className="border-b border-slate-200 pb-8 mb-12">
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="bg-purple-100 text-purple-700 p-2 rounded-lg">
                                     <Megaphone size={24} />
                                 </span>
-                                <span className="text-purple-700 font-bold tracking-wider text-sm uppercase">Join Our Campaign</span>
+                                <span className="text-purple-700 font-bold tracking-wider text-sm uppercase">Join Our Team</span>
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
-                                OUR HIRING
+                            <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-2">
+                                CURRENT OPENINGS
                             </h1>
-                            <p className="text-xl text-slate-600 font-medium">
-                                Social Media Influencer <span className="text-slate-400">|</span> Brand Promotion
+                            <p className="text-xl text-slate-500 font-medium">
+                                Explore opportunities to grow with us
                             </p>
                         </div>
 
-                        {/* Main Content */}
-                        <div className="space-y-10">
-
-                            {/* Introduction */}
-                            <div className="prose prose-slate max-w-none">
-                                <p className="text-lg leading-relaxed text-slate-700">
-                                    The experienced <strong className="text-slate-900">Social Media Influencers</strong> irrespective of locations are required for our long term On-line Business Advertisements (informative) on their own Social Media Platforms for our tangible and intangible products.
-                                </p>
-                            </div>
-
-                            {/* Sectors & Platforms Grid */}
-                            <div className="grid md:grid-cols-2 gap-8">
-
-                                {/* Sectors */}
-                                <div className="bg-purple-50 p-6 rounded-2xl border border-purple-100">
-                                    <h3 className="font-bold text-slate-900 mb-4 text-lg">Target Sectors</h3>
-                                    <ul className="space-y-3">
-                                        {sectors.map((sector, idx) => (
-                                            <li key={idx} className="flex items-center gap-3 bg-white p-3 rounded-xl border border-purple-100 shadow-sm">
-                                                <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold">
-                                                    {idx + 1}
-                                                </span>
-                                                <span className="text-slate-700 font-medium">{sector}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                {/* Platforms */}
-                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                                    <h3 className="font-bold text-slate-900 mb-4 text-lg">Required Platforms</h3>
-                                    <p className="text-sm text-slate-500 mb-4">Good connections / followers / subscribers required on:</p>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        {platforms.map((p, idx) => (
-                                            <a
-                                                key={idx}
-                                                href={p.link || "#"}
-                                                target={p.link ? "_blank" : "_self"}
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-2 bg-white p-3 rounded-xl border border-slate-100 hover:shadow-md transition-shadow"
-                                            >
-                                                <p.icon size={20} className={p.color} />
-                                                <span className="font-semibold text-slate-700">{p.name}</span>
-                                            </a>
-                                        ))}
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Application Process */}
-                            <div className="bg-slate-900 text-white py-6 px-4 md:p-8 rounded-2xl relative overflow-hidden">
-                                <div className="relative z-10">
-                                    <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                                        <Mail className="text-purple-400" /> Submission Details
-                                    </h3>
-                                    <p className="text-slate-300 mb-6 leading-relaxed">
-                                        Interested Influencers may submit their clear <strong>Quotation</strong> for each platform for each advertisement with its live duration, along with their number of connections/followers.
-                                    </p>
-
-                                    <div className="bg-white/10 p-5 rounded-xl border border-white/10 mb-6">
-                                        <ul className="space-y-2 text-sm text-slate-300">
-                                            <li className="flex gap-2"><span className="text-purple-400">•</span> Quotation must be in PDF format.</li>
-                                            <li className="flex gap-2"><span className="text-purple-400">•</span> Excludes 3rd Party & GST.</li>
-                                            <li className="flex gap-2"><span className="text-purple-400">•</span> Include Payment Terms & Conditions.</li>
-                                        </ul>
-                                    </div>
-
-                                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 bg-white text-slate-900 p-4 rounded-xl w-full">
-
-                                        <span className="font-bold text-xs sm:text-sm uppercase tracking-wider text-slate-500">
-                                            Send To:
+                        {/* Hiring Listings */}
+                        <div className="space-y-20">
+                            {hiringPositions.map((job) => (
+                                <motion.div
+                                    key={job.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="relative"
+                                >
+                                    {/* Job Badge */}
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <span className="bg-slate-900 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                                            {job.badge}
                                         </span>
-
-                                        <a
-                                            href="mailto:hemant.parekh2012@gmail.com"
-                                            className="font-mono font-bold text-sm sm:text-lg break-all sm:break-normal hover:text-purple-600 transition-colors"
-                                        >
-                                            hemant.parekh2012@gmail.com
-                                        </a>
-
+                                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                        <span className="text-slate-500 text-sm font-semibold uppercase tracking-wider">
+                                            {job.type.replace('-', ' ')}
+                                        </span>
                                     </div>
 
-                                </div>
+                                    {/* Job Title & Meta */}
+                                    <div className="mb-8">
+                                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
+                                            {job.title}
+                                        </h2>
+                                        {job.subtitle && (
+                                            <p className="text-xl text-indigo-600 font-bold mb-4">{job.subtitle}</p>
+                                        )}
+                                        <div className="flex flex-wrap gap-4 text-slate-600 font-medium">
+                                            {job.location && (
+                                                <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg text-sm">
+                                                    <Info size={14} className="text-slate-400" /> {job.location}
+                                                </span>
+                                            )}
+                                            {job.ctc && (
+                                                <span className="flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1 rounded-lg text-sm border border-green-100">
+                                                    <span className="font-bold">CTC:</span> {job.ctc}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
 
-                                {/* Doodles */}
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600 blur-[80px] opacity-20 rounded-full"></div>
-                            </div>
+                                    {/* Job Content Sections */}
+                                    <div className="grid lg:grid-cols-12 gap-10">
+                                        <div className="lg:col-span-8 space-y-8">
+                                            {/* HR Manager Specific Content */}
+                                            {job.essentialCriteria && (
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                                        <span className="w-2 h-6 bg-purple-600 rounded-full"></span>
+                                                        Essential Criteria
+                                                    </h3>
+                                                    <ul className="space-y-3">
+                                                        {job.essentialCriteria.map((item, idx) => (
+                                                            <li key={idx} className="flex gap-3 text-slate-700 leading-relaxed">
+                                                                <span className="text-purple-600 font-bold">•</span>
+                                                                {item}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
 
-                            {/* Important Note */}
-                            <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg flex items-start gap-3">
-                                <Info className="text-amber-500 mt-1 flex-shrink-0" />
-                                <div>
-                                    <h4 className="font-bold text-amber-800">Important Note</h4>
-                                    <ul className="list-disc list-inside text-sm text-amber-700 mt-1 space-y-1">
-                                        <li>Influencers are <strong>not responsible</strong> for marketing our products.</li>
-                                        <li>We will provide well-designed advertisements ready for posting.</li>
-                                    </ul>
-                                </div>
-                            </div>
+                                            {job.responsibilities && (
+                                                <div>
+                                                    <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                                        <span className="w-2 h-6 bg-indigo-600 rounded-full"></span>
+                                                        Job Responsibilities
+                                                    </h3>
+                                                    <div className="grid sm:grid-cols-2 gap-4">
+                                                        {job.responsibilities.map((res, idx) => (
+                                                            <div key={idx} className="bg-slate-50 p-4 rounded-xl border border-slate-100 group hover:border-indigo-200 transition-colors">
+                                                                <p className="text-sm text-slate-600 leading-relaxed group-hover:text-slate-900 transition-colors">
+                                                                    {res}
+                                                                </p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
 
+                                            {/* Influencer Specific Content */}
+                                            {job.description && (
+                                                <div className="prose prose-slate max-w-none">
+                                                    <p className="text-lg leading-relaxed text-slate-700">
+                                                        {job.description}
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            {job.sectors && (
+                                                <div className="bg-purple-50 p-6 rounded-2xl border border-purple-100">
+                                                    <h3 className="font-bold text-slate-900 mb-4 text-lg">Target Sectors</h3>
+                                                    <div className="grid sm:grid-cols-2 gap-3">
+                                                        {job.sectors.map((sector, idx) => (
+                                                            <div key={idx} className="flex items-center gap-3 bg-white p-3 rounded-xl border border-purple-100 shadow-sm">
+                                                                <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold">
+                                                                    {idx + 1}
+                                                                </span>
+                                                                <span className="text-slate-700 font-medium">{sector}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="lg:col-span-4 space-y-6">
+                                            {/* Influencer Platforms */}
+                                            {job.platforms && (
+                                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                                                    <h3 className="font-bold text-slate-900 mb-4 text-lg text-center lg:text-left">Required Platforms</h3>
+                                                    <div className="grid grid-cols-1 gap-3">
+                                                        {job.platforms.map((p, idx) => (
+                                                            <div
+                                                                key={idx}
+                                                                className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-100 shadow-sm"
+                                                            >
+                                                                <p.icon size={20} className={p.color} />
+                                                                <span className="font-semibold text-slate-700">{p.name}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Submission / Application Card */}
+                                            <div className="bg-slate-900 text-white p-6 rounded-3xl relative overflow-hidden shadow-2xl">
+                                                <div className="relative z-10">
+                                                    <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                                        <Mail className="text-purple-400" size={20} /> Apply Now
+                                                    </h3>
+
+                                                    {job.submissionDetails ? (
+                                                        <div className="space-y-4">
+                                                            <p className="text-sm text-slate-400 leading-relaxed">
+                                                                Submit your **Quotation** in PDF format including payment terms.
+                                                            </p>
+                                                            <ul className="space-y-2 text-xs text-slate-400">
+                                                                {job.submissionDetails.map((detail, idx) => (
+                                                                    <li key={idx} className="flex gap-2">
+                                                                        <span className="text-purple-400">•</span> {detail}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                    ) : (
+                                                        <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                                                            Please send your updated Resume/CV to the email below. Mention the position in the subject line.
+                                                        </p>
+                                                    )}
+
+                                                    <div className="mt-6 pt-6 border-t border-white/10">
+                                                        <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-2">
+                                                            Email CV To:
+                                                        </span>
+                                                        <a
+                                                            href={`mailto:${job.email}`}
+                                                            className="text-sms font-black text-purple-400 hover:text-white transition-colors break-all underline decoration-purple-600 underline-offset-4"
+                                                        >
+                                                            {job.email}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/20 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                            </div>
+
+                                            {/* Important/Note Section */}
+                                            {(job.importantNotes || job.notes) && (
+                                                <div className="bg-amber-50 border border-amber-100 p-5 rounded-2xl">
+                                                    <div className="flex items-center gap-2 mb-3 text-amber-800 font-bold">
+                                                        <Info size={18} />
+                                                        <span>Note</span>
+                                                    </div>
+                                                    <ul className="space-y-2">
+                                                        {(job.importantNotes || job.notes).map((note, idx) => (
+                                                            <li key={idx} className="text-xs text-amber-700 leading-relaxed flex gap-2">
+                                                                <span className="text-amber-400 flex-shrink-0">•</span>
+                                                                {note}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Separator for multiple listings */}
+                                    <div className="mt-20 border-t border-slate-100 last:hidden"></div>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </main>

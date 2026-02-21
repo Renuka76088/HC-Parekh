@@ -45,7 +45,7 @@ export default function OurTradeInvitation() {
                                 <div className="relative z-10">
                                     <h3 className="text-2xl font-bold text-slate-900 mb-4">Invitation for Partnership</h3>
                                     <p className="text-xl leading-relaxed text-slate-700">
-                                        The <span className="font-bold text-slate-900">Traders, Retailers and which lesalers</span> especially from the <span className="font-bold text-slate-900">Textile & Garments, FMCG, Paper Industries and Medical & Healthcare</span> are invited for Trade Partnership.
+                                        The <span className="font-bold text-slate-900">Traders, Retailers and Manufacturers</span> especially from the <span className="font-bold text-slate-900">Textile & Garments, FMCG, Paper Industries and Medical & Healthcare</span> are invited for Trade Partnership.
                                     </p>
                                 </div>
                                 {/* Changed decorative color to blue/slate to fit business theme */}
