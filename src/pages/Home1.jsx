@@ -33,9 +33,9 @@ const Preloader = ({ setLoading }) => {
           <motion.h1
             initial={{ y: 100 }} animate={{ y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="text-6xl md:text-8xl font-black tracking-tighter"
+            className="text-[24px] md:text-6xl font-black tracking-tighter"
           >
-            HC PAREKH
+            HC PAREKH & ASSOCIATES
           </motion.h1>
         </div>
         <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden mt-4 max-w-xs mx-auto">

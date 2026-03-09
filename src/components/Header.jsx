@@ -27,7 +27,7 @@ export default function Header({ toggleSidebar }) {
                   </span>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-slate-900">HC Parekh</h2>
+                  <h2 className="text-[14px] md:text-2xl font-black text-slate-900">HC Parekh & Associates</h2>
                   <p className="text-[10px] md:text-xs text-slate-500 font-bold tracking-wider">Project Consultant & Investor</p>
                   <p className="text-[10px] md:text-xs text-slate-500 font-bold tracking-wider">( Industrial & Corporate )</p>
 

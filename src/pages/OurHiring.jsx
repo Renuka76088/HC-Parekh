@@ -47,7 +47,7 @@ export default function OurHiring() {
                 "End-to-End Recruitment of Technical and Non-Technical Manpower (CV Invitation, Short-listing, 3-Round Interviews, On-boarding & Induction).",
                 "Pay-Roll Management, Leave, EPF, ESI, Labour Law Compliance.",
                 "Re-Location of Manpower, Relieving and Full & Final Settlement.",
-                "Plan, coordinate and organize campus Interviews in different Colleges and Universities as required."
+                "Plan, coordinate and organize campus Interviews in different Colleges and Universities as and when and where required."
             ],
             notes: [
                 "This is not a Placement Consultancy.",

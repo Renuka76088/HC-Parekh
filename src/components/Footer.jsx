@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
-            <h2 className="text-2xl font-black text-slate-900">HC Parekh</h2>
+            <h2 className="text-2xl font-black text-slate-900">HC Parekh & Associates</h2>
             <p className="text-slate-500 text-sm mt-2">Leading Industrial Consultant Since 2007</p>
           </div>
           <div className="flex gap-4 text-sm font-bold text-slate-600 
