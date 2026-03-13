@@ -14,6 +14,7 @@ export default function ProjectNotice() {
         "Dynamic Website Developments",
         "Digital Marketing Services",
         "Software Development with Integrations",
+         "On-line Advertisement Services",
         "Mobile App Developments",
         "Outdoor Publicity & Advertisement Services",
         "Dynamic Website Tutorials",
