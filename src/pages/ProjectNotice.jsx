@@ -131,6 +131,15 @@ export default function ProjectNotice() {
                                         Book Appointment
                                     </Link>
                                 </div>
+
+                                  <div className="relative z-10 mt-10">
+                                <p className="mb-6">
+                                    <span className="font-bold text-xl mr-2">Note :</span>
+                                    <span className="text-slate-300 leading-relaxed mb-6">
+                                    We are not End-users. We supply the Business on a Retainership.
+                                    </span>
+                                </p>
+                                </div>
                             </div>
 
                         </div>
