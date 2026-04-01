@@ -263,7 +263,7 @@ export default function OurHiring() {
                                                         </span>
                                                         <a
                                                             href={`mailto:${job.email}`}
-                                                            className="text-sms font-black text-purple-400 hover:text-white transition-colors break-all underline decoration-purple-600 underline-offset-4"
+                                                            className="text-sm font-black text-purple-400 hover:text-white transition-colors break-all underline decoration-purple-600 underline-offset-4"
                                                         >
                                                             {job.email}
                                                         </a>
