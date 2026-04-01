@@ -31,30 +31,30 @@ export default function OurHiring() {
     ];
 
     const hiringPositions = [
-        {
-            id: "hr-manager",
-            type: "full-time",
-            badge: "Management",
-            title: "HR Manager",
-            location: "Bengaluru, Karnataka",
-            ctc: "Rs. 5.25 L.P.A.",
-            essentialCriteria: [
-                "Preferably MBA (HR) or any Graduate with at least 8 years net experience in End-To-End recruitment of Technical and Non-Technical Manpower in different profiles in any Manufacturing Industries or Corporate Sectors (other than OPC).",
-                "Should have proficiency in English, Hindi and Regional language equally.",
-                "Should be acquainted with official Tour & Travel within India."
-            ],
-            responsibilities: [
-                "End-to-End Recruitment of Technical and Non-Technical Manpower (CV Invitation, Short-listing, 3-Round Interviews, On-boarding & Induction).",
-                "Pay-Roll Management, Leave, EPF, ESI, Labour Law Compliance.",
-                "Re-Location of Manpower, Relieving and Full & Final Settlement.",
-                "Plan, coordinate and organize campus Interviews in different Colleges and Universities as and when and where required."
-            ],
-            notes: [
-                "This is not a Placement Consultancy.",
-                "Hiring process opens till appointment of the deserving candidate by 3-Round interview."
-            ],
-            email: "hemant.parekh2012@gmail.com"
-        },
+        // {
+        //     id: "hr-manager",
+        //     type: "full-time",
+        //     badge: "Management",
+        //     title: "HR Manager",
+        //     location: "Bengaluru, Karnataka",
+        //     ctc: "Rs. 5.25 L.P.A.",
+        //     essentialCriteria: [
+        //         "Preferably MBA (HR) or any Graduate with at least 8 years net experience in End-To-End recruitment of Technical and Non-Technical Manpower in different profiles in any Manufacturing Industries or Corporate Sectors (other than OPC).",
+        //         "Should have proficiency in English, Hindi and Regional language equally.",
+        //         "Should be acquainted with official Tour & Travel within India."
+        //     ],
+        //     responsibilities: [
+        //         "End-to-End Recruitment of Technical and Non-Technical Manpower (CV Invitation, Short-listing, 3-Round Interviews, On-boarding & Induction).",
+        //         "Pay-Roll Management, Leave, EPF, ESI, Labour Law Compliance.",
+        //         "Re-Location of Manpower, Relieving and Full & Final Settlement.",
+        //         "Plan, coordinate and organize campus Interviews in different Colleges and Universities as and when and where required."
+        //     ],
+        //     notes: [
+        //         "This is not a Placement Consultancy.",
+        //         "Hiring process opens till appointment of the deserving candidate by 3-Round interview."
+        //     ],
+        //     email: "hemant.parekh2012@gmail.com"
+        // },
         {
             id: "influencer",
             type: "campaign",
