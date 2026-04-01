@@ -259,7 +259,7 @@ export default function OurHiring() {
 
                                                     <div className="mt-6 pt-6 border-t border-white/10">
                                                         <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-2">
-                                                            Email CV To:
+                                                            Email Quotation To:
                                                         </span>
                                                         <a
                                                             href={`mailto:${job.email}`}
