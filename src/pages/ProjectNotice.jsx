@@ -17,15 +17,15 @@ export default function ProjectNotice() {
          "On-line Advertisement Services",
         "Mobile App Developments",
         "Outdoor Publicity & Advertisement Services",
-        "Dynamic Website Tutorials",
-        "Digital Marketing Tutorials",
-        "AI-ML Tutorials",
+        // "Dynamic Website Tutorials",
+        // "Digital Marketing Tutorials",
+        // "AI-ML Tutorials",
         "Annual Maintenance Contract"
     ];
 
     const locations = [
-        "Bengaluru", "Hyderabad", "Pune", "Chennai",
-        "Ahmedabad", "Bhubaneswar", "Raipur", "Nagpur"
+        "Bengaluru", "Hyderabad", "Chennai", "Kolkata",
+        "Raipur", "Ahmedabad", "Surat",
     ];
 
     const sectors = [
@@ -57,7 +57,7 @@ export default function ProjectNotice() {
                                 PROJECT NOTICE
                             </h1>
                             <p className="text-xl text-slate-600 font-medium">
-                                Information Technology <span className="text-slate-400">|</span> F.Y. 2025-26-27
+                                Information Technology <span className="text-slate-400">|</span> F.Y. 2026-27
                             </p>
                         </div>
 
@@ -136,7 +136,7 @@ export default function ProjectNotice() {
                                 <p className="mb-6">
                                     <span className="font-bold text-xl mr-2">Note :</span>
                                     <span className="text-slate-300 leading-relaxed mb-6">
-                                    We are not End-users. We supply the Business on a Retainership.
+                                    We are not End-users. We supply the Business on a Retainership. Our consultation charges are applicable.
                                     </span>
                                 </p>
                                 </div>
