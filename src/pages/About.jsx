@@ -142,8 +142,8 @@ const CONTENT = {
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-4 backdrop-blur-sm">
                         <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Active Role
                     </div>
-                    <h4 className="text-2xl font-bold mb-2">Vice President</h4>
-                    <p className="text-rose-100 text-lg">A Regd. Social Organization, Hyderabad, Telangana</p>
+                    <h4 className="text-2xl font-bold mb-2"><strong>Associated with many Social Organizations</strong>  of India</h4>
+                    {/* <p className="text-rose-100 text-lg">A Regd. Social Organization, Hyderabad, Telangana</p> */}
                 </div>
             </div>
         </div>
