@@ -31,6 +31,23 @@ export default function OurHiring() {
     ];
 
     const hiringPositions = [
+        {
+            id: "on-payroll",
+            type: "full-time",
+            badge: "On Pay Roll",
+            title: "On Pay Roll",
+            description: "We are currently hiring talented professionals for the following positions:",
+            positions: [
+                "Project Assistants",
+                "Fashion Designers",
+                "Quality Associates (Fabrics)",
+                "Customer Relationship Associates",
+                "Accountants",
+                "Delivery Boy"
+            ],
+            contactNote: "For further details, contact us",
+            email: "hemant.parekh2012@gmail.com"
+        },
         // {
         //     id: "hr-manager",
         //     type: "full-time",
@@ -59,7 +76,7 @@ export default function OurHiring() {
             id: "influencer",
             type: "campaign",
             badge: "Social Media",
-            title: "Social Media Influencer",
+            title: "Social Media Influencer ( On Contract)",
             subtitle: "Brand Promotion",
             description: "Experienced Social Media Influencers irrespective of locations are required for our long-term Online Business Advertisements (informative) on their own social media platforms for our tangible and intangible products.",
             sectors: sectors,
@@ -149,7 +166,32 @@ export default function OurHiring() {
 
                                     {/* Job Content Sections */}
                                     <div className="grid lg:grid-cols-12 gap-10">
-                                        <div className="lg:col-span-8 space-y-8">
+                                        {/* Left Side - Positions List */}
+                                        <div className={`${job.positions ? 'lg:col-span-6' : 'lg:col-span-8'} space-y-8`}>
+                                            {/* On PayRoll Specific Content */}
+                                            {job.positions && (
+                                                <div>
+                                                    <p className="text-lg leading-relaxed text-slate-700 mb-6">
+                                                        {job.description}
+                                                    </p>
+                                                    <div className="space-y-3">
+                                                        {job.positions.map((position, idx) => (
+                                                            <div key={idx} className="flex items-start gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100 hover:border-purple-200 transition-colors">
+                                                                <span className="text-purple-600 font-bold text-lg flex-shrink-0 mt-1">
+                                                                    {idx + 1})
+                                                                </span>
+                                                                <span className="text-slate-700 font-semibold">{position}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    {job.contactNote && (
+                                                        <p className="text-lg font-semibold text-slate-900 mt-8 p-4 bg-purple-50 border-l-4 border-purple-600 rounded">
+                                                            {job.contactNote}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+
                                             {/* HR Manager Specific Content */}
                                             {job.essentialCriteria && (
                                                 <div>
@@ -212,7 +254,38 @@ export default function OurHiring() {
                                             )}
                                         </div>
 
-                                        <div className="lg:col-span-4 space-y-6">
+                                        {/* Right Side - Contact Card for PayRoll */}
+                                        {job.positions && (
+                                            <div className="lg:col-span-6 space-y-6">
+                                                {/* Contact Card */}
+                                                <div className="bg-slate-900 text-white p-6 rounded-3xl relative overflow-hidden shadow-2xl">
+                                                    <div className="relative z-10">
+                                                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                                            <Mail className="text-purple-400" size={20} /> Contact Us
+                                                        </h3>
+                                                        <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                                                            Submit your resume and inquire about the available positions.
+                                                        </p>
+                                                        <div className="mt-6 pt-6 border-t border-white/10">
+                                                            <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-2">
+                                                                Contact:
+                                                            </span>
+                                                            <a
+                                                                href={`mailto:${job.email}`}
+                                                                className="text-sm font-black text-purple-400 hover:text-white transition-colors break-all underline decoration-purple-600 underline-offset-4"
+                                                            >
+                                                                {job.email}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/20 blur-2xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Right Side - Influencer Platforms & Contact */}
+                                        {!job.positions && (
+                                            <div className="lg:col-span-4 space-y-6">
                                             {/* Influencer Platforms */}
                                             {job.platforms && (
                                                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
@@ -235,7 +308,7 @@ export default function OurHiring() {
                                             <div className="bg-slate-900 text-white p-6 rounded-3xl relative overflow-hidden shadow-2xl">
                                                 <div className="relative z-10">
                                                     <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                                        <Mail className="text-purple-400" size={20} /> Apply Now
+                                                        <Mail className="text-purple-400" size={20} /> {job.positions ? "Contact Us" : "Apply Now"}
                                                     </h3>
 
                                                     {job.submissionDetails ? (
@@ -253,13 +326,13 @@ export default function OurHiring() {
                                                         </div>
                                                     ) : (
                                                         <p className="text-sm text-slate-400 leading-relaxed mb-6">
-                                                            Please send your updated Resume/CV to the email below. Mention the position in the subject line.
+                                                            {job.positions ? "Submit your resume and inquire about the available positions." : "Please send your updated Resume/CV to the email below. Mention the position in the subject line."}
                                                         </p>
                                                     )}
 
                                                     <div className="mt-6 pt-6 border-t border-white/10">
                                                         <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-2">
-                                                            Email Quotation To:
+                                                            {job.positions ? "Contact:" : "Email Quotation To:"}
                                                         </span>
                                                         <a
                                                             href={`mailto:${job.email}`}
@@ -290,6 +363,7 @@ export default function OurHiring() {
                                                 </div>
                                             )}
                                         </div>
+                                        )}
                                     </div>
 
                                     {/* Separator for multiple listings */}
