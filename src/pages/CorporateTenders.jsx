@@ -94,7 +94,7 @@ export default function CorporateTenders() {
                                 </p> */}
 
                                  <p className="text-slate-300 text-sm">
-                                    Contract Documents can be obtained in-person on payment of its prescribed fee ( Non-refundable) </p>
+                                    Contract Documents can be obtained in-person on payment of its prescribed fee (Non-refundable) </p>
                             </div>
 
                         </div>
