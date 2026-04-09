@@ -229,7 +229,7 @@ export default function OurHiring() {
                                             )}
 
                                             {/* Influencer Specific Content */}
-                                            {job.description && (
+                                            {job.description && !job.positions && (
                                                 <div className="prose prose-slate max-w-none">
                                                     <p className="text-lg leading-relaxed text-slate-700">
                                                         {job.description}
