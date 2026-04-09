@@ -34,8 +34,8 @@ export default function OurHiring() {
         {
             id: "on-payroll",
             type: "full-time",
-            badge: "On Pay Roll",
-            title: "On Pay Roll",
+            badge: "On Payroll",
+            title: "On Payroll",
             description: "We are currently hiring talented professionals for the following positions:",
             positions: [
                 "Project Assistants",
