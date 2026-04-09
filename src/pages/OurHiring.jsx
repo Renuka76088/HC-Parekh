@@ -76,7 +76,7 @@ export default function OurHiring() {
             id: "influencer",
             type: "campaign",
             badge: "Social Media",
-            title: "Social Media Influencer ( On Contract)",
+            title: "Social Media Influencer (On Contract)",
             subtitle: "Brand Promotion",
             description: "Experienced Social Media Influencers irrespective of locations are required for our long-term Online Business Advertisements (informative) on their own social media platforms for our tangible and intangible products.",
             sectors: sectors,

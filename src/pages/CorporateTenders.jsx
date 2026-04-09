@@ -77,7 +77,7 @@ export default function CorporateTenders() {
             "Supply of Cotton Fabrics",
             "Supply of Corrugated Packing Boxes",
             "Supply of Non-technical Manpower",
-            "Supply, installation and Demo of Digital Standee"
+            "Supply, Installation and Demo of Digital Standees"
         ].map((work, idx) => (
             <div key={idx} className="flex items-center gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
                 <div className="bg-rose-500 w-2 h-2 rounded-full flex-shrink-0" />
@@ -94,7 +94,7 @@ export default function CorporateTenders() {
                                 </p> */}
 
                                  <p className="text-slate-300 text-sm">
-                                    Contract Documents can be obtained in-person  from our <strong>authorised official</strong> on payment of its prescribed fee ( Non-refundable) </p>
+                                    Contract Documents can be obtained in-person on payment of its prescribed fee ( Non-refundable) </p>
                             </div>
 
                         </div>
