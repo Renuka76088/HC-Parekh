@@ -54,7 +54,7 @@ export default function CorporateTenders() {
                                 CORPORATE TENDERS
                             </h1>
                             <p className="text-xl text-slate-600 font-medium">
-                                ( At present, No EOI Published)
+                                (At present, No EOI Published)
                             </p>
                         </div>
 
