@@ -70,7 +70,7 @@ export default function OurTeam() {
                                         <div className="aspect-[4/5] relative overflow-hidden bg-slate-100">
                                             {member.photoUrl ? (
                                                 <img 
-                                                    src={`http://localhost:4000${member.photoUrl}`} 
+                                                    src={member.photoUrl} 
                                                     alt={member.name}
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                                 />
