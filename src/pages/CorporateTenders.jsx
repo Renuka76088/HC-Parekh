@@ -56,45 +56,43 @@ export default function CorporateTenders() {
                         {/* Main Content */}
                         <div className="space-y-10">
 
-                        <div className="space-y-16">
-                            {tenders.map((tender, idx) => {
-                                const pointsList = Array.isArray(tender.points) ? tender.points : (typeof tender.points === 'string' ? tender.points.split('\n') : []);
+                            <div className="space-y-16">
+                                {tenders.map((tender, idx) => {
+                                    const pointsList = Array.isArray(tender.points) ? tender.points : (typeof tender.points === 'string' ? tender.points.split('\n') : []);
 
-                                return (
-                                    <div key={tender._id || idx} className="w-full">
-                                        <h2 className="text-3xl md:text-4xl font-black text-[#0f172a] mb-6 uppercase tracking-tight">
-                                            {tender.title}
-                                        </h2>
+                                    return (
+                                        <div key={tender._id || idx} className="w-full">
+                                            <h2 className="text-3xl md:text-4xl font-black text-[#0f172a] mb-6 uppercase tracking-tight">
+                                                {tender.title}
+                                            </h2>
 
-                                        {tender.description && (
-                                            <h3 className="text-xl font-bold text-[#0f172a] mb-6">
-                                                {tender.description}
-                                            </h3>
-                                        )}
+                                            {tender.description && (
+                                                <h3 className="text-xl font-bold text-[#0f172a] mb-6">
+                                                    {tender.description}
+                                                </h3>
+                                            )}
 
-                                        {pointsList.length > 0 && (
-                                            <div className="bg-[#f8fafc] p-8 rounded-[2rem] border border-[#f1f5f9] shadow-sm">
-                                                <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-6">Target Sectors</h3>
-                                                <div className="space-y-4">
-                                                    {pointsList.filter(p => typeof p === 'string' ? p.trim() : p).map((point, pIdx) => (
-                                                        <div key={pIdx} className="flex items-start gap-4">
-                                                            <div className="w-2 h-2 rounded-full bg-[#c81e1e] shrink-0 mt-2.5" />
-                                                            <span className="text-[#0f172a] font-medium text-[17px] leading-tight">
-                                                                {typeof point === 'string' ? point.trim() : point}
-                                                            </span>
-                                                        </div>
-                                                    ))}
-                                                </div>
+                                            <div className="space-y-3">
+                                                {pointsList.filter(p => typeof p === 'string' ? p.trim() : p).map((point, pIdx) => (
+                                                    <div key={pIdx} className="bg-[#f8fafc] px-6 py-5 rounded-[1.25rem] flex items-center gap-4 hover:bg-slate-100 transition-colors">
+                                                        <div className="w-2 h-2 rounded-full bg-[#c81e1e] shrink-0" />
+                                                        <span className="text-[#0f172a] font-medium text-[17px] leading-snug">
+                                                            {typeof point === 'string' ? point.trim() : point}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                                {pointsList.length === 0 && (
+                                                    <p className="text-slate-400 italic text-sm py-2">No specific points listed for this contract.</p>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                            
-                            {tenders.length === 0 && (
-                                <p className="text-slate-400 italic text-center py-8 text-lg">(At present, No EOI Published)</p>
-                            )}
-                        </div>
+                                        </div>
+                                    );
+                                })}
+
+                                {tenders.length === 0 && (
+                                    <p className="text-slate-400 italic text-center py-8 text-lg">(At present, No EOI Published)</p>
+                                )}
+                            </div>
 
                             {/* Footer Note */}
                             <div className="bg-slate-900 text-white p-6 rounded-xl text-center">
@@ -102,7 +100,7 @@ export default function CorporateTenders() {
                                     Tender Documents can be obtained <strong>In-person</strong> on payment of prescribed fee (Non-refundable).
                                 </p> */}
 
-                                 <p className="text-slate-300 text-sm">
+                                <p className="text-slate-300 text-sm">
                                     Contract Documents can be obtained in-person on payment of its prescribed fee (Non-refundable) </p>
                             </div>
 
