@@ -78,7 +78,7 @@ export default function Services() {
                                             <CheckCircle2 size={20} className="text-rose-500 group-hover:scale-110 transition-transform" />
                                         </div>
                                         <p className="text-slate-700 font-medium text-lg leading-snug group-hover:text-slate-900">
-                                            {service.title}
+                                            {service.title || service.name}
                                         </p>
                                     </motion.div>
                                 ))}
