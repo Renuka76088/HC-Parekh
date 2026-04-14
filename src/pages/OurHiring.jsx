@@ -55,66 +55,148 @@ export default function OurHiring() {
                         </div>
 
                         {/* Hiring Listings */}
-                        <div className="space-y-12">
-                            {vacancies.map((job, idx) => (
-                                <motion.div
-                                    key={job._id || idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all"
-                                >
-                                    <div className="flex flex-wrap items-center gap-3 mb-6">
-                                        <span className="bg-slate-900 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                                            {job.type}
-                                        </span>
-                                        <span className="flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg text-sm text-slate-600">
-                                            <Info size={14} className="text-slate-400" /> {job.location || "Any Location"}
-                                        </span>
-                                    </div>
+                        <div className="space-y-24">
+                            {vacancies.map((job, idx) => {
+                                const platformIcons = {
+                                    linkedin: <Linkedin size={18} className="text-[#0077b5] shrink-0" />,
+                                    facebook: <Facebook size={18} className="text-[#1877f2] shrink-0" />,
+                                    instagram: <Instagram size={18} className="text-[#e4405f] shrink-0" />,
+                                    youtube: <Youtube size={18} className="text-[#ff0000] shrink-0" />
+                                };
 
-                                    <div className="mb-8">
-                                        <h2 className="text-3xl font-extrabold text-slate-900 mb-4">{job.title}</h2>
-                                        <p className="text-lg text-slate-600 leading-relaxed max-w-3xl">
+                                const getIcon = (plat) => {
+                                    const p = plat.toLowerCase();
+                                    if (p.includes('linkedin')) return platformIcons.linkedin;
+                                    if (p.includes('facebook')) return platformIcons.facebook;
+                                    if (p.includes('instagram')) return platformIcons.instagram;
+                                    if (p.includes('youtube') || p.includes('tube')) return platformIcons.youtube;
+                                    return <Megaphone size={18} className="text-slate-400 shrink-0" />;
+                                };
+
+                                const targetSectors = Array.isArray(job.targetSectors) ? job.targetSectors : (typeof job.targetSectors === 'string' ? job.targetSectors.split('\n') : []);
+                                const requiredPlatforms = Array.isArray(job.requiredPlatforms) ? job.requiredPlatforms : (typeof job.requiredPlatforms === 'string' ? job.requiredPlatforms.split('\n') : []);
+                                const submissionNotes = Array.isArray(job.submissionNotes) ? job.submissionNotes : (typeof job.submissionNotes === 'string' ? job.submissionNotes.split('\n') : []);
+
+                                const topBadgeText = job.campaign ? job.campaign.split(' ')[0] : (job.type || 'HIRING');
+
+                                return (
+                                    <div key={job._id || idx} className="w-full">
+                                        {/* Badges */}
+                                        <div className="flex flex-wrap items-center gap-2 mb-4">
+                                            <span className="bg-[#0f172a] text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                                                {topBadgeText}
+                                            </span>
+                                            <span className="text-slate-300">•</span>
+                                            <span className="text-[#64748b] text-[11px] font-bold uppercase tracking-widest">
+                                                CAMPAIGN
+                                            </span>
+                                        </div>
+
+                                        {/* Title & Subtitle */}
+                                        <h2 className="text-3xl md:text-[2.5rem] leading-tight font-black text-[#0f172a] mb-2">
+                                            {job.title} {!job.title?.toLowerCase().includes('contract') && job.type === 'On Contract' ? '(On Contract)' : ''}
+                                        </h2>
+                                        {job.campaign && (
+                                            <h3 className="text-lg font-bold text-[#6366f1] mb-8">{job.campaign}</h3>
+                                        )}
+
+                                        {/* Description */}
+                                        <p className="text-[1.1rem] text-[#475569] leading-relaxed max-w-4xl mb-10">
                                             {job.description}
                                         </p>
-                                    </div>
 
-                                    <div className="grid lg:grid-cols-2 gap-8 mb-8">
-                                        {job.requirements && (
-                                            <div className="bg-purple-50 p-6 rounded-2xl border border-purple-100">
-                                                <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
-                                                    Key Requirements
-                                                </h3>
-                                                <ul className="space-y-2">
-                                                    {job.requirements.split('\n').filter(r => r.trim()).map((req, rIdx) => (
-                                                        <li key={rIdx} className="flex gap-2 text-slate-700 text-sm leading-relaxed">
-                                                            <span className="text-purple-600 font-bold">•</span>
-                                                            {req.trim()}
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                                            {/* Left Column: Sectors */}
+                                            <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
+                                                {targetSectors.length > 0 && (
+                                                    <div className="bg-[#fdfaff] p-6 lg:p-8 rounded-[2rem] border border-[#f3e8ff]">
+                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">Target Sectors</h3>
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                            {targetSectors.filter(t => typeof t === 'string' ? t.trim() : t).map((sector, sIdx) => (
+                                                                <div key={sIdx} className="bg-white rounded-[1rem] p-3 flex items-center gap-4 shadow-sm border border-[#f8fafc]">
+                                                                    <div className="w-8 h-8 rounded-full bg-[#f3e8ff] flex items-center justify-center shrink-0">
+                                                                        <span className="text-[#9333ea] font-black text-[13px]">{sIdx + 1}</span>
+                                                                    </div>
+                                                                    <span className="text-[#334155] font-semibold text-[15px]">{typeof sector === 'string' ? sector.trim() : sector}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                        <div className="bg-slate-900 text-white p-6 rounded-2xl flex flex-col justify-center">
-                                            <h3 className="font-bold mb-2 flex items-center gap-2">
-                                                <Mail className="text-purple-400" size={18} /> How to Apply
-                                            </h3>
-                                            <p className="text-slate-400 text-sm mb-4">
-                                                Please send your updated Resume/CV to our recruitment team.
-                                            </p>
-                                            <a 
-                                                href="mailto:hemant.parekh2012@gmail.com" 
-                                                className="text-purple-400 font-black hover:text-white transition-colors underline decoration-purple-600/50 underline-offset-4"
-                                            >
-                                                hemant.parekh2012@gmail.com
-                                            </a>
+
+                                            {/* Right Column: Platforms, Apply, Note */}
+                                            <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
+                                                
+                                                {/* Required Platforms */}
+                                                {requiredPlatforms.length > 0 && (
+                                                    <div className="bg-[#f8fafc] p-6 lg:p-8 rounded-[2rem] shadow-sm">
+                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">Required Platforms</h3>
+                                                        <div className="flex flex-col gap-3">
+                                                            {requiredPlatforms.filter(p => typeof p === 'string' ? p.trim() : p).map((plat, pIdx) => (
+                                                                <div key={pIdx} className="bg-white px-5 py-3.5 rounded-[1.25rem] border border-[#f1f5f9] flex items-center gap-4 shadow-sm">
+                                                                    {getIcon(typeof plat === 'string' ? plat : '')}
+                                                                    <span className="text-[#334155] font-semibold text-[15px]">{typeof plat === 'string' ? plat.trim() : plat}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Apply Now */}
+                                                <div className="bg-gradient-to-br from-[#1e1b4b] to-[#0f172a] p-8 rounded-[2rem] text-white shadow-xl relative overflow-hidden">
+                                                    <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500 blur-[80px] opacity-20 rounded-full" />
+                                                    <div className="relative z-10">
+                                                        <h3 className="text-2xl font-black text-white mb-4 flex items-center gap-3">
+                                                            <Mail className="text-[#c084fc]" size={24} /> Apply Now
+                                                        </h3>
+                                                        <p className="text-[#cbd5e1] text-[15px] leading-relaxed mb-6">
+                                                            Submit your <strong className="text-white">Quotation</strong> in PDF format including payment terms.
+                                                        </p>
+                                                        
+                                                        {submissionNotes.length > 0 && (
+                                                            <ul className="space-y-2.5 mb-8">
+                                                                {submissionNotes.filter(n => typeof n === 'string' ? n.trim() : n).map((note, nIdx) => (
+                                                                    <li key={nIdx} className="flex items-start gap-3 text-[#94a3b8] text-[14px]">
+                                                                        <span className="text-[#c084fc] font-black shrink-0">•</span>
+                                                                        <span className="leading-snug">{typeof note === 'string' ? note.trim() : note}</span>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        )}
+
+                                                        <div className="pt-6 border-t border-white/10">
+                                                            <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">Email Quotation To:</p>
+                                                            <a href="mailto:hemant.parekh2012@gmail.com" className="inline-block text-[#d8b4fe] font-black text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors break-all">
+                                                                hemant.parekh2012@gmail.com
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Note Box */}
+                                                <div className="bg-[#fffbf0] border border-[#fef0c7] p-8 rounded-[2rem]">
+                                                    <h3 className="text-[#92400e] font-black text-lg mb-5 flex items-center gap-2">
+                                                        <Info size={20} className="text-[#d97706]" /> Note
+                                                    </h3>
+                                                    <ul className="space-y-4">
+                                                        <li className="flex items-start gap-3 text-[#b45309] text-[15px] leading-relaxed font-semibold">
+                                                            <span className="text-[#f59e0b] font-black shrink-0 pt-0.5">•</span>
+                                                            Influencers are not responsible for marketing our products.
+                                                        </li>
+                                                        <li className="flex items-start gap-3 text-[#b45309] text-[15px] leading-relaxed font-semibold">
+                                                            <span className="text-[#f59e0b] font-black shrink-0 pt-0.5">•</span>
+                                                            We will provide well-designed advertisements ready for posting.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </motion.div>
-                            ))}
-
+                                );
+                            })}
+                            
                             {vacancies.length === 0 && !loading && (
                                 <div className="text-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
                                     <div className="mb-4 text-slate-300 flex justify-center">
