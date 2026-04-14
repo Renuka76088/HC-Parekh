@@ -5,25 +5,27 @@ import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Briefcase, Scale, Users, FileText, Globe } from 'lucide-react';
 
-const SERVICES_LIST = [
-    "Industrial & Corporate M.O.U & Joint Ventures",
-    "Corporate Investors & Investment",
-    "Tender & Contract",
-    "Appointment of Dealers and Distributors",
-    "Product Indenting & Procurement",
-    "Appointment of Sales Agencies",
-    "Industrial & Corporate Materials Management",
-    "Vendor Management",
-    "Company Debt Recovery & Settlement",
-    "Redressal of the Labour Dispute",
-    "Consumer Grievance & Dispute Redressal & Settlement",
-    "Arbitration",
-    "Implementation of Corporate & Industrial Projects (Micro, Small, Medium & Large)",
-    "Implementation of Socio-Commercial Projects"
-];
+import { contentApi } from '../api';
 
 export default function Services() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    React.useEffect(() => {
+        fetchServices();
+    }, []);
+
+    const fetchServices = async () => {
+        try {
+            const res = await contentApi.getServices();
+            setServices(res.data);
+        } catch (err) {
+            console.error('Error fetching services:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800">
@@ -57,9 +59,16 @@ export default function Services() {
                         {/* Services Grid */}
                         <div className="p-8 md:p-10">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {SERVICES_LIST.map((service, idx) => (
+                                {(services.length > 0 ? services : [
+                                    { title: "Industrial & Corporate M.O.U & Joint Ventures" },
+                                    { title: "Corporate Investors & Investment" },
+                                    { title: "Tender & Contract" },
+                                    { title: "Appointment of Dealers and Distributors" },
+                                    { title: "Product Indenting & Procurement" },
+                                    { title: "Appointment of Sales Agencies" }
+                                ]).map((service, idx) => (
                                     <motion.div
-                                        key={idx}
+                                        key={service._id || idx}
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.05 }}
@@ -69,7 +78,7 @@ export default function Services() {
                                             <CheckCircle2 size={20} className="text-rose-500 group-hover:scale-110 transition-transform" />
                                         </div>
                                         <p className="text-slate-700 font-medium text-lg leading-snug group-hover:text-slate-900">
-                                            {service}
+                                            {service.title}
                                         </p>
                                     </motion.div>
                                 ))}

@@ -6,34 +6,27 @@ import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import { FileText, MapPin, CheckCircle } from 'lucide-react';
 
+import { corporateApi } from '../api';
+
 export default function ProjectNotice() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [notices, setNotices] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const requirements = [
-        "The Social Media Influencers Services",
-        "Dynamic Website Developments",
-        "Digital Marketing Services",
-        "Software Development with Integrations",
-         "On-line Advertisement Services",
-        "Mobile App Developments",
-        "Outdoor Publicity & Advertisement Services",
-        // "Dynamic Website Tutorials",
-        // "Digital Marketing Tutorials",
-        // "AI-ML Tutorials",
-        "Annual Maintenance Contract"
-    ];
+    React.useEffect(() => {
+        fetchNotices();
+    }, []);
 
-    const locations = [
-        "Bengaluru", "Hyderabad", "Chennai", "Kolkata",
-        "Raipur", "Ahmedabad", "Surat",
-    ];
-
-    const sectors = [
-        "Textile & Garments",
-        "Pulp & Paper Industry",
-        "Medical & Healthcare",
-        "F.M.C.G."
-    ];
+    const fetchNotices = async () => {
+        try {
+            const res = await corporateApi.getNotices();
+            setNotices(res.data);
+        } catch (err) {
+            console.error('Error fetching notices:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800">
@@ -62,62 +55,72 @@ export default function ProjectNotice() {
                         </div>
 
                         {/* Main Content */}
-                        <div className="space-y-10">
-
-                            {/* Introduction */}
-                            <div className="prose prose-slate max-w-none">
-                                <p className="text-lg leading-relaxed text-slate-700">
-                                    Following are our requirements for our long term Project Works for a tenure of <strong className="text-slate-900">3 years</strong> under the “Contract” to be executed in various cities for our different Clients of the different sectors.
-                                </p>
-                            </div>
-
-                            {/* Sectors & Locations Grid */}
-                            <div className="grid md:grid-cols-2 gap-8">
-                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                        <MapPin size={18} className="text-rose-500" /> Project Locations
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {locations.map((loc, idx) => (
-                                            <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm text-slate-600 shadow-sm border border-slate-100">
-                                                {loc}
-                                            </span>
-                                        ))}
+                        <div className="space-y-12">
+                            {notices.map((notice, nIdx) => (
+                                <div key={notice._id || nIdx} className="space-y-8 animate-in fade-in duration-500">
+                                    <div className="prose prose-slate max-w-none">
+                                        <h2 className="text-2xl font-black text-slate-900 border-l-4 border-rose-600 pl-4">{notice.title}</h2>
+                                        <p className="text-lg leading-relaxed text-slate-700 mt-4">
+                                            {notice.description}
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                                    <h3 className="font-bold text-slate-900 mb-4">Target Sectors</h3>
-                                    <ul className="space-y-2">
-                                        {sectors.map((sector, idx) => (
-                                            <li key={idx} className="flex items-center gap-2 text-slate-700 text-sm">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                                                {sector}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
+                                            <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                                <MapPin size={18} className="text-rose-500" /> Project Locations
+                                            </h3>
+                                            <div className="flex flex-wrap gap-2">
+                                                {(notice.projectLocations || "Global").split(',').map((loc, idx) => (
+                                                    <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm text-slate-600 shadow-sm border border-slate-100">
+                                                        {loc.trim()}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
 
-                            {/* Requirements List */}
-                            <div className="bg-rose-50/50 p-8 rounded-2xl border border-rose-100">
-                                <h3 className="text-2xl font-bold text-slate-900 mb-6">Our Requirements</h3>
-                                <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
-                                    {requirements.map((req, idx) => (
-                                        <motion.div
-                                            key={idx}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: idx * 0.05 }}
-                                            className="flex items-start gap-3"
-                                        >
-                                            <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" />
-                                            <span className="text-slate-700 font-medium">{req}</span>
-                                        </motion.div>
-                                    ))}
+                                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
+                                            <h3 className="font-bold text-slate-900 mb-4">Target Sectors</h3>
+                                            <div className="flex flex-wrap gap-2">
+                                                {(notice.targetSectors || "Multi-sector").split(',').map((sector, idx) => (
+                                                    <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm font-bold text-rose-600 shadow-sm border border-rose-100 uppercase tracking-tighter">
+                                                        {sector.trim()}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {notice.ourRequirements && (
+                                        <div className="bg-rose-50/50 p-8 rounded-2xl border border-rose-100">
+                                            <h3 className="text-2xl font-bold text-slate-900 mb-6">Our Requirements</h3>
+                                            <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                                                {notice.ourRequirements.split('\n').filter(r => r.trim()).map((req, idx) => (
+                                                    <motion.div
+                                                        key={idx}
+                                                        initial={{ opacity: 0, x: -10 }}
+                                                        whileInView={{ opacity: 1, x: 0 }}
+                                                        viewport={{ once: true }}
+                                                        transition={{ delay: idx * 0.05 }}
+                                                        className="flex items-start gap-3"
+                                                    >
+                                                        <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" />
+                                                        <span className="text-slate-700 font-medium">{req.trim()}</span>
+                                                    </motion.div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    <div className="h-px bg-slate-100 my-8" />
                                 </div>
-                            </div>
+                            ))}
+
+                            {notices.length === 0 && (
+                                <p className="text-center text-slate-400 py-12 italic">Currently, there are no project notices published for F.Y. 2026-27.</p>
+                            )}
+
+                             {/* Footer Note and other static elements... */}
 
                             {/* Footer Note */}
                             <div className="bg-slate-900 text-white p-8 rounded-2xl relative overflow-hidden">

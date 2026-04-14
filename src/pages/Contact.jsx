@@ -5,30 +5,8 @@ import Footer from '../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Mail, Send, Loader2, CheckCircle2, XCircle, X } from 'lucide-react';
 
-const LOCATIONS = [
-    {
-        city: "Bengaluru, Karnataka",
-        address: "Laxmipuram, Bengaluru 560008",
-        color: "rose"
-    },
-    {
-        city: "Bhubaneswar, Odisha",
-        address: "Sundarpada, Bhubaneswar 751002",
-        color: "blue"
-    },
-    {
-        city: "Nagpur (Maharashtra)",
-        address: "",
-        color: "amber"
-    }
-];
+import { contentApi } from '../api';
 
-const CONTACT_EMAILS = [
-    { type: "Appointment", email: "appointment@hcparekh.com" },
-    { type: "Project Services", email: "services@hcparekh.com" }
-];
-
-// Success/Error Modal Component
 const StatusModal = ({ isOpen, type, message, onClose }) => (
     <AnimatePresence>
         {isOpen && (
@@ -77,9 +55,26 @@ export default function Contact() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
+    const [contactData, setContactData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Modal State
     const [modal, setModal] = useState({ isOpen: false, type: 'success', message: '' });
+
+    React.useEffect(() => {
+        fetchContact();
+    }, []);
+
+    const fetchContact = async () => {
+        try {
+            const res = await contentApi.getContact();
+            setContactData(res.data);
+        } catch (err) {
+            console.error('Error fetching contact:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -149,7 +144,11 @@ export default function Contact() {
                                     <MapPin className="text-rose-500" /> Our Locations
                                 </h3>
                                 <div className="space-y-4">
-                                    {LOCATIONS.map((loc, idx) => (
+                                    {(contactData?.locations || [
+                                        { city: "Bengaluru, Karnataka", address: "Laxmipuram, Bengaluru 560008" },
+                                        { city: "Bhubaneswar, Odisha", address: "Sundarpada, Bhubaneswar 751002" },
+                                        { city: "Nagpur (Maharashtra)", address: "" }
+                                    ]).map((loc, idx) => (
                                         <motion.div
                                             key={idx}
                                             initial={{ opacity: 0, x: -10 }}
@@ -170,7 +169,10 @@ export default function Contact() {
                                     <Mail className="text-rose-500" /> Email Contacts
                                 </h3>
                                 <div className="grid gap-4">
-                                    {CONTACT_EMAILS.map((contact, idx) => (
+                                    {[
+                                        { type: "Appointment", email: contactData?.emails?.appointment || "appointment@hcparekh.com" },
+                                        { type: "Project Services", email: contactData?.emails?.services || "services@hcparekh.com" }
+                                    ].map((contact, idx) => (
                                         <a
                                             key={idx}
                                             href={`mailto:${contact.email}`}

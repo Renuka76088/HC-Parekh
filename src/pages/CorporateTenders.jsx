@@ -5,32 +5,27 @@ import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import { FileText, Calendar, Box, Scissors, Truck, Wallet } from 'lucide-react';
 
+import { corporateApi } from '../api';
+
 export default function CorporateTenders() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [tenders, setTenders] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const tenderDetails = [
-        { label: "Name of Work", value: "Double Bedsheets, Pillowcover Stitching, Packing", icon: FileText },
-        { label: "Quantity", value: "30,000 Sets per EOI (1 Set = 1 Double Bedsheet + 2 Pillowcovers)", icon: Box },
-        { label: "Tenure", value: "01 Year", icon: Calendar },
-    ];
+    React.useEffect(() => {
+        fetchTenders();
+    }, []);
 
-    const specs = [
-        { label: "Double Bedsheets", value: '90” x 100”' },
-        { label: "Pillowcover", value: '18” x 24”' },
-        { label: "Inner Lid", value: '6”' },
-    ];
-
-    const technicalDetails = [
-        { label: "Stitching Quality", value: "Double lined Simple stitch OR Single lined zigzag Stitch", icon: Scissors },
-        { label: "Thread", value: "Moon Brand or any equivalent Brand", icon: Scissors },
-        { label: "Fabrics Issued", value: "Pure Fine Cotton, Printed, 144 TC and above (Supplied to Tailoring Agencies)", icon: Box },
-        { label: "Packing Size", value: 'Corrugated Box, 3-Ply, Laminated, Multi-colour (14” x 11” x 1.5“)', icon: Box },
-    ];
-
-    const terms = [
-        { label: "Transportation", value: "To be borne by the Company upto Transporters. Local Transport to be borne by the Tailoring Agency.", icon: Truck },
-        { label: "Payment Terms", value: "50% Advance with each W.O. | 50% on Inspection and L.R.", icon: Wallet },
-    ];
+    const fetchTenders = async () => {
+        try {
+            const res = await corporateApi.getTenders();
+            setTenders(res.data);
+        } catch (err) {
+            console.error('Error fetching tenders:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800">
@@ -72,18 +67,18 @@ export default function CorporateTenders() {
     <h2 className="text-xl font-bold text-slate-900 mb-4">Open contract for the following works</h2>
     
     <div className="grid md:grid-cols-1 gap-4">
-        {[
-            "Supply, Installation and Demo of Domestic & Industrial Sewing Machines",
-            "Supply of Cotton Fabrics",
-            "Supply of Corrugated Packing Boxes",
-            "Supply of Non-technical Manpower",
-            "Supply, Installation and Demo of Digital Standees"
-        ].map((work, idx) => (
-            <div key={idx} className="flex items-center gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                <div className="bg-rose-500 w-2 h-2 rounded-full flex-shrink-0" />
-                <p className="font-semibold text-slate-900 leading-tight">{work}</p>
+        {tenders.map((tender, idx) => (
+            <div key={tender._id || idx} className="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-amber-200 transition-colors">
+                <div className="flex items-start gap-4">
+                    <div className="bg-rose-500 w-2 h-2 rounded-full mt-2 flex-shrink-0" />
+                    <div>
+                        <p className="font-bold text-slate-900 text-lg leading-tight mb-2">{tender.title}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{tender.description}</p>
+                    </div>
+                </div>
             </div>
         ))}
+        {tenders.length === 0 && <p className="text-slate-400 italic text-center py-4">(At present, No EOI Published)</p>}
     </div>
 </div>
 

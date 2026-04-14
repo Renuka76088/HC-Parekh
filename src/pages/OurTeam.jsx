@@ -5,8 +5,27 @@ import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import { Users, Briefcase, MapPin, CheckCircle } from 'lucide-react';
 
+import { workforceApi } from '../api';
+
 export default function OurTeam() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [team, setTeam] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    React.useEffect(() => {
+        fetchTeam();
+    }, []);
+
+    const fetchTeam = async () => {
+        try {
+            const res = await workforceApi.getTeam();
+            setTeam(res.data);
+        } catch (err) {
+            console.error('Error fetching team:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800">
@@ -37,8 +56,43 @@ export default function OurTeam() {
                         {/* Main Content */}
                         <div className="space-y-10">
 
-                            {/* Core Statement */}
-                            <div className="bg-indigo-50 p-8 rounded-2xl border border-indigo-100 relative overflow-hidden">
+                            {/* Team Members Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {team.map((member, idx) => (
+                                    <motion.div
+                                        key={member._id || idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all overflow-hidden"
+                                    >
+                                        <div className="aspect-[4/5] relative overflow-hidden bg-slate-100">
+                                            {member.photoUrl ? (
+                                                <img 
+                                                    src={`http://localhost:4000${member.photoUrl}`} 
+                                                    alt={member.name}
+                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-slate-300">
+                                                    <Users size={64} />
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/80 to-transparent p-6">
+                                                <h4 className="text-white font-bold text-xl">{member.name}</h4>
+                                                <p className="text-slate-200 text-sm font-medium">{member.position}</p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                                {team.length === 0 && !loading && (
+                                    <p className="col-span-full text-center text-slate-400 py-12 italic">Our team details will be updated soon.</p>
+                                )}
+                            </div>
+
+                            {/* Core Statement (Keep it as a secondary detail) */}
+                            <div className="bg-indigo-50 p-8 rounded-2xl border border-indigo-100 relative overflow-hidden mt-12">
                                 <div className="relative z-10">
                                     <h3 className="text-2xl font-bold text-slate-900 mb-4">Team Structure</h3>
                                     <p className="text-xl leading-relaxed text-slate-700">
@@ -46,25 +100,6 @@ export default function OurTeam() {
                                     </p>
                                 </div>
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-200 rounded-full blur-3xl opacity-50 -mr-10 -mt-10"></div>
-                            </div>
-
-                            {/* Illustration / Features grid */}
-                            <div className="grid md:grid-cols-3 gap-6">
-                                {[
-                                    { icon: Briefcase, title: "Industry Experts", desc: "Specialists from IT, Textile, FMCG, and more." },
-                                    { icon: MapPin, title: "Location Independent", desc: "Operating across multiple cities efficiently." },
-                                    { icon: CheckCircle, title: "Retainership Model", desc: "Ensuring long-term commitment and quality." }
-                                ].map((item, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        whileHover={{ y: -5 }}
-                                        className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all"
-                                    >
-                                        <item.icon className="text-indigo-600 mb-4" size={28} />
-                                        <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
-                                        <p className="text-slate-500 text-sm">{item.desc}</p>
-                                    </motion.div>
-                                ))}
                             </div>
 
                         </div>
