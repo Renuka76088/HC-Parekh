@@ -115,7 +115,8 @@ export default function About() {
                             className="group relative overflow-hidden bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all"
                         >
                             <div className="absolute top-0 right-0 w-2 h-full bg-rose-500 scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
-                            <p className="text-slate-700 font-medium text-lg">{item}</p>
+                            <p className="text-slate-700 font-bold text-lg">{item.title || item}</p>
+                            {item.description && <p className="text-sm text-slate-500 mt-1">{item.description}</p>}
                         </motion.div>
                     ))}
                 </div>
@@ -146,7 +147,8 @@ export default function About() {
                     {(data?.socialServices || ["Associated with many Social Organizations of India"]).map((item, idx) => (
                         <div key={idx} className="bg-rose-600 text-white p-8 rounded-2xl shadow-xl relative overflow-hidden">
                             <div className="relative z-10">
-                                <h4 className="text-2xl font-bold">{item}</h4>
+                                <h4 className="text-2xl font-bold">{item.title || item}</h4>
+                                {item.description && <p className="text-rose-100 mt-2">{item.description}</p>}
                             </div>
                         </div>
                     ))}

@@ -58,26 +58,53 @@ export default function CorporateMOU() {
                         <div className="space-y-8">
 
                         <div className="space-y-6">
-                            {mous.map((mou, idx) => (
-                                <motion.div
-                                    key={mou._id || idx}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-xl transition-all group"
-                                >
-                                    <div className="flex items-start gap-5">
-                                        <div className="p-3 bg-white rounded-xl shadow-sm text-emerald-600 group-hover:scale-110 transition-transform">
-                                            <FileSignature size={28} />
+                            {mous.map((mou, idx) => {
+                                const themes = [
+                                    { wrapper: 'bg-[#f4f8fd] border-[#e6eff8]', title: 'text-[#0f172a]', subtitle: 'text-[#8c9bab]', iconBox: 'bg-white border-[#e2e8f0]', icon: 'text-[#2563eb]', check: 'text-[#3b82f6]', innerBox: 'bg-white', Icon: Monitor },
+                                    { wrapper: 'bg-[#fff5f5] border-[#ffe4e6]', title: 'text-[#0f172a]', subtitle: 'text-[#8c9bab]', iconBox: 'bg-white border-[#e2e8f0]', icon: 'text-[#e11d48]', check: 'text-[#f43f5e]', innerBox: 'bg-white', Icon: Scissors },
+                                    { wrapper: 'bg-[#f0fdf4] border-[#dcfce7]', title: 'text-[#0f172a]', subtitle: 'text-[#8c9bab]', iconBox: 'bg-white border-[#e2e8f0]', icon: 'text-[#16a34a]', check: 'text-[#22c55e]', innerBox: 'bg-white', Icon: FileSignature },
+                                    { wrapper: 'bg-[#faf5ff] border-[#f3e8ff]', title: 'text-[#0f172a]', subtitle: 'text-[#8c9bab]', iconBox: 'bg-white border-[#e2e8f0]', icon: 'text-[#9333ea]', check: 'text-[#a855f7]', innerBox: 'bg-white', Icon: ScrollText }
+                                ];
+                                const theme = themes[idx % themes.length];
+                                const Icon = theme.Icon;
+                                const pointsList = Array.isArray(mou.points) ? mou.points : (typeof mou.points === 'string' ? mou.points.split('\n') : []);
+
+                                return (
+                                    <motion.div
+                                        key={mou._id || idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className={`p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border ${theme.wrapper} transition-all`}
+                                    >
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <div className={`w-14 h-14 rounded-2xl shadow-sm border flex items-center justify-center shrink-0 ${theme.iconBox} ${theme.icon}`}>
+                                                <Icon size={26} strokeWidth={2} />
+                                            </div>
+                                            <div>
+                                                <h3 className={`text-2xl font-bold ${theme.title}`}>{mou.title}</h3>
+                                                {mou.description && (
+                                                    <p className={`text-sm font-bold uppercase tracking-wider ${theme.subtitle}`}>{mou.description}</p>
+                                                )}
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h3 className="text-2xl font-black text-slate-900 mb-2">{mou.title}</h3>
-                                            <p className="text-slate-600 leading-relaxed font-medium">{mou.description}</p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
+                                        
+                                        {pointsList.length > 0 && (
+                                            <div className={`p-6 md:p-8 rounded-2xl md:rounded-[1.5rem] shadow-sm border border-slate-100 ${theme.innerBox}`}>
+                                                <div className="grid md:grid-cols-2 gap-y-4 gap-x-8">
+                                                    {pointsList.filter(p => typeof p === 'string' ? p.trim() : p).map((point, pIdx) => (
+                                                        <div key={pIdx} className="flex items-start gap-3">
+                                                            <CheckCircle2 size={20} className={`${theme.check} shrink-0 mt-0.5`} />
+                                                            <span className="text-[#334155] font-medium text-[15px]">{typeof point === 'string' ? point.trim() : point}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                );
+                            })}
                             {mous.length === 0 && (
                                 <p className="text-center text-slate-400 py-12 italic">Currently, there are no active MOU invitations.</p>
                             )}

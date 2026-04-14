@@ -71,9 +71,9 @@ export default function ProjectNotice() {
                                                 <MapPin size={18} className="text-rose-500" /> Project Locations
                                             </h3>
                                             <div className="flex flex-wrap gap-2">
-                                                {(notice.projectLocations || "Global").split(',').map((loc, idx) => (
+                                                {(Array.isArray(notice.projectLocations) ? notice.projectLocations : (notice.projectLocations || "Global").split(',')).map((loc, idx) => (
                                                     <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm text-slate-600 shadow-sm border border-slate-100">
-                                                        {loc.trim()}
+                                                        {typeof loc === 'string' ? loc.trim() : loc}
                                                     </span>
                                                 ))}
                                             </div>
@@ -82,9 +82,9 @@ export default function ProjectNotice() {
                                         <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
                                             <h3 className="font-bold text-slate-900 mb-4">Target Sectors</h3>
                                             <div className="flex flex-wrap gap-2">
-                                                {(notice.targetSectors || "Multi-sector").split(',').map((sector, idx) => (
+                                                {(Array.isArray(notice.targetSectors) ? notice.targetSectors : (notice.targetSectors || "Multi-sector").split(',')).map((sector, idx) => (
                                                     <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm font-bold text-rose-600 shadow-sm border border-rose-100 uppercase tracking-tighter">
-                                                        {sector.trim()}
+                                                        {typeof sector === 'string' ? sector.trim() : sector}
                                                     </span>
                                                 ))}
                                             </div>
@@ -95,7 +95,7 @@ export default function ProjectNotice() {
                                         <div className="bg-rose-50/50 p-8 rounded-2xl border border-rose-100">
                                             <h3 className="text-2xl font-bold text-slate-900 mb-6">Our Requirements</h3>
                                             <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
-                                                {notice.ourRequirements.split('\n').filter(r => r.trim()).map((req, idx) => (
+                                                {(Array.isArray(notice.ourRequirements) ? notice.ourRequirements : notice.ourRequirements.split('\n')).filter(r => typeof r === 'string' ? r.trim() : r).map((req, idx) => (
                                                     <motion.div
                                                         key={idx}
                                                         initial={{ opacity: 0, x: -10 }}
@@ -105,7 +105,7 @@ export default function ProjectNotice() {
                                                         className="flex items-start gap-3"
                                                     >
                                                         <CheckCircle size={20} className="text-rose-600 flex-shrink-0 mt-0.5" />
-                                                        <span className="text-slate-700 font-medium">{req.trim()}</span>
+                                                        <span className="text-slate-700 font-medium">{typeof req === 'string' ? req.trim() : req}</span>
                                                     </motion.div>
                                                 ))}
                                             </div>
