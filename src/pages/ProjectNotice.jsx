@@ -79,14 +79,20 @@ export default function ProjectNotice() {
                                             </div>
                                         </div>
 
-                                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
-                                            <h3 className="font-bold text-slate-900 mb-4">Target Sectors</h3>
-                                            <div className="flex flex-wrap gap-2">
-                                                {(Array.isArray(notice.targetSectors) ? notice.targetSectors : (notice.targetSectors || "Multi-sector").split(',')).map((sector, idx) => (
-                                                    <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm font-bold text-rose-600 shadow-sm border border-rose-100 uppercase tracking-tighter">
-                                                        {typeof sector === 'string' ? sector.trim() : sector}
-                                                    </span>
+                                        <div className="bg-[#f8fafc] p-8 rounded-[2rem] border border-[#f1f5f9] shadow-sm">
+                                            <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-6">Target Sectors</h3>
+                                            <div className="space-y-4">
+                                                {(Array.isArray(notice.targetSectors) ? notice.targetSectors : (notice.targetSectors || "").split(',')).filter(s => typeof s === 'string' ? s.trim() : s).map((sector, idx) => (
+                                                    <div key={idx} className="flex items-start gap-4">
+                                                        <div className="w-2 h-2 rounded-full bg-[#c81e1e] shrink-0 mt-2.5" />
+                                                        <span className="text-[#0f172a] font-medium text-[17px] leading-tight">
+                                                            {typeof sector === 'string' ? sector.trim() : sector}
+                                                        </span>
+                                                    </div>
                                                 ))}
+                                                {(!notice.targetSectors || (Array.isArray(notice.targetSectors) && notice.targetSectors.length === 0)) && (
+                                                    <span className="text-slate-400 italic text-sm">Multi-sector</span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
