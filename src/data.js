@@ -15,7 +15,9 @@ export const SIDEBAR_LINKS = [
   { label: "Corporate Tenders", href: "/corporate-tenders" },
   { label: "Corporate MOU", href: "/corporate-mou" },
   { label: "Our Hiring", href: "/our-hiring" },
-  { label: "Our Team", href: "/our-team" }
+  { label: "Our Team", href: "/our-team" },
+  { label: "Circular", href: "/circulars" },
+  { label: "Web Market", href: "/web-market" }
 ];
 
 export const SLIDER_CONTENT = [
@@ -42,11 +44,13 @@ export const SLIDER_CONTENT = [
 ];
 
 export const NOTICES = [
-  { text: "New Tender released for Textile Sector.", urgent: true, date: "Jan 14" },
-  { text: "Revised Service Charges for FY 2025-26.", urgent: false, date: "Jan 10" },
-  { text: "Annual Corporate Meeting Scheduled.", urgent: false, date: "Jan 05" },
-  { text: "Project Auction FY 2025-26.", urgent: false, date: "Dec 28" },
-  { text: "Refer our Project Manual.", urgent: false, date: "Dec 20" }
+  { title: "Parekh Chamber of Textile", text: "www.parekhchamber.com", urgent: false, date: "Live" },
+  { title: "Parekh e-Trade Market (Textile)", text: "www.parekhtrade.com", urgent: false, date: "Live" },
+  { title: "Parekh Southern Polyfabrics", text: "www.parekhpolyfabrics.com", urgent: false, date: "Live" },
+  { title: "Parekh Linen", text: "www.parekhlinen.com", urgent: false, date: "Live" },
+  { title: "Parekh Rayon", text: "www.parekhrayon.com", urgent: false, date: "Live" },
+  { title: "Parekh Fabrics", text: "www.parekhfabrics.com", urgent: false, date: "Live" },
+  { title: "Parekh Silk", text: "www.parekhsilk.com", urgent: false, date: "Live" }
 ];
 
 export const SERVICES = [

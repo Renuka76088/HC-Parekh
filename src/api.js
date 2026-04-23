@@ -19,6 +19,13 @@ export const corporateApi = {
   getTenders: () => api.get('/corporate/tenders'),
   getMOUs: () => api.get('/corporate/mous'),
   getNotices: () => api.get('/corporate/notices'),
+  getCirculars: () => api.get('/corporate/circulars'),
+};
+
+export const webMarketApi = {
+  getSettings: () => api.get('/web-market/settings'),
+  submitEndUser: (data) => api.post('/web-market/end-user', data),
+  submitServiceProvider: (data) => api.post('/web-market/service-provider', data),
 };
 
 export const workforceApi = {

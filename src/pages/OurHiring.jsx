@@ -75,7 +75,6 @@ export default function OurHiring() {
 
                                 const targetSectors = Array.isArray(job.targetSectors) ? job.targetSectors : (typeof job.targetSectors === 'string' ? job.targetSectors.split('\n') : []);
                                 const requiredPlatforms = Array.isArray(job.requiredPlatforms) ? job.requiredPlatforms : (typeof job.requiredPlatforms === 'string' ? job.requiredPlatforms.split('\n') : []);
-                                const submissionNotes = Array.isArray(job.submissionNotes) ? job.submissionNotes : (typeof job.submissionNotes === 'string' ? job.submissionNotes.split('\n') : []);
 
                                 const topBadgeText = job.campaign ? job.campaign.split(' ')[0] : (job.type || 'HIRING');
 
@@ -88,7 +87,7 @@ export default function OurHiring() {
                                             </span>
                                             <span className="text-slate-300">•</span>
                                             <span className="text-[#64748b] text-[11px] font-bold uppercase tracking-widest">
-                                                CAMPAIGN
+                                                {job.campaignHeading || 'CAMPAIGN'}
                                             </span>
                                         </div>
 
@@ -110,7 +109,7 @@ export default function OurHiring() {
                                             <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
                                                 {targetSectors.length > 0 && (
                                                     <div className="bg-[#fdfaff] p-6 lg:p-8 rounded-[2rem] border border-[#f3e8ff]">
-                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">Target Sectors</h3>
+                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">{job.targetSectorsHeading || 'Target Sectors'}</h3>
                                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                             {targetSectors.filter(t => typeof t === 'string' ? t.trim() : t).map((sector, sIdx) => (
                                                                 <div key={sIdx} className="bg-white rounded-[1rem] p-3 flex items-center gap-4 shadow-sm border border-[#f8fafc]">
@@ -131,7 +130,7 @@ export default function OurHiring() {
                                                 {/* Required Platforms */}
                                                 {requiredPlatforms.length > 0 && (
                                                     <div className="bg-[#f8fafc] p-6 lg:p-8 rounded-[2rem] shadow-sm">
-                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">Required Platforms</h3>
+                                                        <h3 className="text-[1.15rem] font-bold text-[#0f172a] mb-6">{job.requiredPlatformsHeading || 'Required Platforms'}</h3>
                                                         <div className="flex flex-col gap-3">
                                                             {requiredPlatforms.filter(p => typeof p === 'string' ? p.trim() : p).map((plat, pIdx) => (
                                                                 <div key={pIdx} className="bg-white px-5 py-3.5 rounded-[1.25rem] border border-[#f1f5f9] flex items-center gap-4 shadow-sm">
@@ -148,48 +147,26 @@ export default function OurHiring() {
                                                     <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500 blur-[80px] opacity-20 rounded-full" />
                                                     <div className="relative z-10">
                                                         <h3 className="text-2xl font-black text-white mb-4 flex items-center gap-3">
-                                                            <Mail className="text-[#c084fc]" size={24} /> Apply Now
+                                                            <Mail className="text-[#c084fc]" size={24} /> {job.applyNowTitle || 'Apply Now'}
                                                         </h3>
                                                         <p className="text-[#cbd5e1] text-[15px] leading-relaxed mb-6">
-                                                            Submit your <strong className="text-white">Quotation</strong> in PDF format including payment terms.
+                                                            {job.quotationInstruction || "Submit your Quotation in PDF format including payment terms."}
                                                         </p>
                                                         
-                                                        {submissionNotes.length > 0 && (
-                                                            <ul className="space-y-2.5 mb-8">
-                                                                {submissionNotes.filter(n => typeof n === 'string' ? n.trim() : n).map((note, nIdx) => (
-                                                                    <li key={nIdx} className="flex items-start gap-3 text-[#94a3b8] text-[14px]">
-                                                                        <span className="text-[#c084fc] font-black shrink-0">•</span>
-                                                                        <span className="leading-snug">{typeof note === 'string' ? note.trim() : note}</span>
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        )}
 
                                                         <div className="pt-6 border-t border-white/10">
-                                                            <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">Email Quotation To:</p>
-                                                            <a href="mailto:hemant.parekh2012@gmail.com" className="inline-block text-[#d8b4fe] font-black text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors break-all">
-                                                                hemant.parekh2012@gmail.com
-                                                            </a>
+                                                            <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">{job.emailHeading || 'Email Quotation To:'}</p>
+                                                            <div className="flex flex-col gap-2">
+                                                                {(Array.isArray(job.emails) && job.emails.length > 0 ? job.emails : ['hemant.parekh2012@gmail.com']).map((email, eIdx) => (
+                                                                    <a key={eIdx} href={`mailto:${email}`} className="inline-block text-[#d8b4fe] font-black text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors break-all">
+                                                                        {email}
+                                                                    </a>
+                                                                ))}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Note Box */}
-                                                <div className="bg-[#fffbf0] border border-[#fef0c7] p-8 rounded-[2rem]">
-                                                    <h3 className="text-[#92400e] font-black text-lg mb-5 flex items-center gap-2">
-                                                        <Info size={20} className="text-[#d97706]" /> Note
-                                                    </h3>
-                                                    <ul className="space-y-4">
-                                                        <li className="flex items-start gap-3 text-[#b45309] text-[15px] leading-relaxed font-semibold">
-                                                            <span className="text-[#f59e0b] font-black shrink-0 pt-0.5">•</span>
-                                                            Influencers are not responsible for marketing our products.
-                                                        </li>
-                                                        <li className="flex items-start gap-3 text-[#b45309] text-[15px] leading-relaxed font-semibold">
-                                                            <span className="text-[#f59e0b] font-black shrink-0 pt-0.5">•</span>
-                                                            We will provide well-designed advertisements ready for posting.
-                                                        </li>
-                                                    </ul>
-                                                </div>
 
                                             </div>
                                         </div>

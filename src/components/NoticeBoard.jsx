@@ -11,7 +11,7 @@ export default function NoticeBoard() {
           <div className="p-1.5 bg-rose-600 rounded-lg animate-pulse">
              <Bell size={16} fill="currentColor" />
           </div>
-          <span className="font-bold tracking-wide text-sm">NOTICE BOARD</span>
+          <span className="font-bold tracking-wide text-sm uppercase">Our Network</span>
         </div>
         <span className="text-[10px] font-bold bg-white/10 px-2 py-1 rounded border border-white/10">LIVE UPDATES</span>
       </div>
@@ -31,9 +31,19 @@ export default function NoticeBoard() {
                  <span className="text-[10px] font-bold text-slate-400 uppercase">{note.date}</span>
                  {note.urgent && <span className="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-bold border border-red-100">URGENT</span>}
               </div>
-              <p className="text-sm text-slate-700 font-medium leading-snug group-hover:text-rose-700 transition-colors">
-                {note.text}
-              </p>
+              <a 
+                href={`https://${note.text}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block group"
+              >
+                <p className="text-sm text-[#800000] font-black leading-snug group-hover:text-[#a52a2a] transition-colors tracking-tight mb-1">
+                  {note.title}
+                </p>
+                <p className="text-[11px] text-blue-600 font-bold group-hover:underline">
+                  {note.text}
+                </p>
+              </a>
             </motion.div>
           ))}
         </div>

@@ -68,7 +68,7 @@ export default function ProjectNotice() {
                                     <div className="grid md:grid-cols-2 gap-8">
                                         <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-sm">
                                             <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                                                <MapPin size={18} className="text-rose-500" /> Project Locations
+                                                <MapPin size={18} className="text-rose-500" /> {notice.projectLocationsHeading || 'Project Locations'}
                                             </h3>
                                             <div className="flex flex-wrap gap-2">
                                                 {(Array.isArray(notice.projectLocations) ? notice.projectLocations : (notice.projectLocations || "Global").split(',')).map((loc, idx) => (
@@ -80,7 +80,7 @@ export default function ProjectNotice() {
                                         </div>
 
                                         <div className="bg-[#f8fafc] p-8 rounded-[2rem] border border-[#f1f5f9] shadow-sm">
-                                            <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-6">Target Sectors</h3>
+                                            <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-6">{notice.targetSectorsHeading || 'Target Sectors'}</h3>
                                             <div className="space-y-4">
                                                 {(Array.isArray(notice.targetSectors) ? notice.targetSectors : (notice.targetSectors || "").split(',')).filter(s => typeof s === 'string' ? s.trim() : s).map((sector, idx) => (
                                                     <div key={idx} className="flex items-start gap-4">
@@ -99,7 +99,7 @@ export default function ProjectNotice() {
 
                                     {notice.ourRequirements && (
                                         <div className="bg-rose-50/50 p-8 rounded-2xl border border-rose-100">
-                                            <h3 className="text-2xl font-bold text-slate-900 mb-6">Our Requirements</h3>
+                                            <h3 className="text-2xl font-bold text-slate-900 mb-6">{notice.ourRequirementsHeading || 'Our Requirements'}</h3>
                                             <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
                                                 {(Array.isArray(notice.ourRequirements) ? notice.ourRequirements : notice.ourRequirements.split('\n')).filter(r => typeof r === 'string' ? r.trim() : r).map((req, idx) => (
                                                     <motion.div

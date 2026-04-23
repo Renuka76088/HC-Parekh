@@ -77,9 +77,18 @@ export default function Services() {
                                         <div className="mt-1">
                                             <CheckCircle2 size={20} className="text-rose-500 group-hover:scale-110 transition-transform" />
                                         </div>
-                                        <p className="text-slate-700 font-medium text-lg leading-snug group-hover:text-slate-900">
-                                            {service.title || service.name}
-                                        </p>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-slate-700 font-bold text-lg leading-snug group-hover:text-slate-900">
+                                                {service.title || service.name}
+                                            </p>
+                                            {Array.isArray(service.points) && service.points.length > 0 && (
+                                                <ul className="mt-2 space-y-1.5 list-disc list-inside">
+                                                    {service.points.map((p, pIdx) => (
+                                                        <li key={pIdx} className="text-sm text-slate-500 font-medium">{p}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
                                     </motion.div>
                                 ))}
                             </div>

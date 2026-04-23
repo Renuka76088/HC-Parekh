@@ -13,6 +13,8 @@ import OurHiring from './pages/OurHiring';
 import SocialServices from './pages/SocialServices';
 import PhotoGallery from './pages/PhotoGallery';
 import OurTradeInvitation from './pages/OurTradeInvitation';
+import Circulars from './pages/Circulars';
+import WebMarket from './pages/WebMarket';
 
 
 import ScrollToTop from './components/ScrollToTop';
@@ -38,6 +40,8 @@ export default function App() {
           <Route path="/our-trade-invitation" element={<OurTradeInvitation />} />
           <Route path="/social-services" element={<SocialServices />} />
           <Route path="/photo-gallery" element={<PhotoGallery />} />
+          <Route path="/circulars" element={<Circulars />} />
+          <Route path="/web-market" element={<WebMarket />} />
 
         </Routes>
 
