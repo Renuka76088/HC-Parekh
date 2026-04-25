@@ -92,7 +92,7 @@ export default function OurHiring() {
                                         </div>
 
                                         {/* Title & Subtitle */}
-                                        <h2 className="text-3xl md:text-[2.5rem] leading-tight font-black text-[#0f172a] mb-2">
+                                        <h2 className="text-3xl md:text-[2.5rem] leading-tight font-bold text-[#0f172a] mb-2">
                                             {job.title} {!job.title?.toLowerCase().includes('contract') && job.type === 'On Contract' ? '(On Contract)' : ''}
                                         </h2>
                                         {job.campaign && (
@@ -155,9 +155,9 @@ export default function OurHiring() {
                                                         
 
                                                         <div className="pt-6 border-t border-white/10">
-                                                            <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">{job.emailHeading || 'Email Quotation To:'}</p>
+                                                            <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">{job.emailHeading || 'Email To:'}</p>
                                                             <div className="flex flex-col gap-2">
-                                                                {(Array.isArray(job.emails) && job.emails.length > 0 ? job.emails : ['hemant.parekh2012@gmail.com']).map((email, eIdx) => (
+                                                                {(job.emails && job.emails.length > 0 ? job.emails : []).map((email, eIdx) => (
                                                                     <a key={eIdx} href={`mailto:${email}`} className="inline-block text-[#d8b4fe] font-black text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors break-all">
                                                                         {email}
                                                                     </a>

@@ -21,7 +21,7 @@ $message = nl2br(strip_tags(trim($data['message']))); // nl2br handles line brea
 if ($subject_key === 'appointment') {
     $to = "appointment@hcparekh.com";
 } else {
-    $to = "services@hcparekh.com";
+    $to = "sumitkumarsahu141@gmail.com";
 }
 
 $email_subject = "New Inquiry: " . ucfirst($subject_key) . " from $name";

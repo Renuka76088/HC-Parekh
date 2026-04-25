@@ -60,5 +60,5 @@ export const SERVICES = [
   { title: "E-Trade Market", icon: Globe, desc: "Import/Export assistance and international partnership building." },
   // { title: "Manpower Solutions", icon: Users, desc: "Recruiting top-tier talent for corporate leadership roles." },
   { title: "Tender Management", icon: FileText, desc: "Expert handling of corporate and government tenders." },
-  { title: "Web Market", icon: Globe, desc: "Expert handling of corporate and government tenders." }
+  { title: "Web Market", icon: Globe, desc: "Expert handling of corporate and government tenders.", link: "/web-market" }
 ];

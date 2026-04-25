@@ -81,7 +81,7 @@ export default function Contact() {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('/php/send_email.php', {
+            const response = await fetch('https://hcparekh.com/php/send_email.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formState),

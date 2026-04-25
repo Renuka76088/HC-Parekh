@@ -48,9 +48,7 @@ export default function CorporateTenders() {
                             <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
                                 CORPORATE TENDERS
                             </h1>
-                            <p className="text-xl text-slate-600 font-medium">
-                                (At present, No EOI Published)
-                            </p>
+                       
                         </div>
 
                         {/* Main Content */}
@@ -62,12 +60,12 @@ export default function CorporateTenders() {
 
                                     return (
                                         <div key={tender._id || idx} className="w-full">
-                                            <h2 className="text-3xl md:text-4xl font-black text-[#0f172a] mb-6 uppercase tracking-tight">
+                                            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-6 uppercase tracking-tight">
                                                 {tender.title}
                                             </h2>
 
                                             {tender.description && (
-                                                <h3 className="text-xl font-bold text-[#0f172a] mb-6">
+                                                <h3 className="text-xl text-[#0f172a] mb-6">
                                                     {tender.description}
                                                 </h3>
                                             )}

@@ -54,7 +54,7 @@ const Circulars = () => {
                 OFFICIAL <span className="text-rose-600">CIRCULARS</span>
               </h1>
               <p className="text-lg text-slate-500 font-medium max-w-2xl">
-                Stay updated with the latest official announcements and directives from HC Parekh & Associates.
+                Stay updated with the latest official announcements and directives from <span className="whitespace-nowrap">HC Parekh</span> & Associates.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ const Circulars = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-rose-600 border-t-transparent"></div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 <AnimatePresence>
                   {filteredCirculars.map((c, index) => (
                     <motion.div
@@ -110,7 +110,7 @@ const Circulars = () => {
                           <User size={14} /> View Details
                         </span>
                         <div className="w-8 h-8 bg-slate-50 rounded-full flex items-center justify-center text-slate-400 group-hover:bg-rose-600 group-hover:text-white transition-all">
-                          <ChevronRight size={18} />
+                          <Printer size={18} />
                         </div>
                       </div>
                     </motion.div>
@@ -146,6 +146,7 @@ const Circulars = () => {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               className="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+              id="printable-area"
             >
               {/* Modal Header */}
               <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
@@ -158,16 +159,16 @@ const Circulars = () => {
                     <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-1">HC Parekh & Associates</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setSelectedCircular(null)}
-                  className="p-2 text-slate-400 hover:text-slate-600 hover:bg-white rounded-full transition-all shadow-sm"
-                >
+                  <button
+                    onClick={() => setSelectedCircular(null)}
+                    className="no-print p-2 text-slate-400 hover:text-slate-600 hover:bg-white rounded-full transition-all shadow-sm"
+                  >
                   <X size={20} />
                 </button>
               </div>
 
               {/* Modal Body */}
-              <div className="p-8 md:p-12 overflow-y-auto custom-scrollbar flex-1 bg-white">
+              <div className="p-8 md:p-16 overflow-y-auto overflow-x-hidden custom-scrollbar flex-1 bg-white">
                 <div className="max-w-3xl mx-auto space-y-8">
                   <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-4 pb-6 border-b border-slate-100">
                     <div className="space-y-1">
@@ -180,32 +181,28 @@ const Circulars = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-6">
-                    <div>
-                      <p className="text-xs font-black text-rose-600 uppercase tracking-[0.2em] mb-2">Subject</p>
-                      <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-snug">
-                        {selectedCircular.subject}
-                      </h2>
-                    </div>
+                  <div className="space-y-4">
+                    <p className="text-lg font-bold text-slate-900">
+                      <span className="inline-block min-w-[60px]">Sub :</span> {selectedCircular.subject}
+                    </p>
                     {selectedCircular.kindAttention && (
-                      <div>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Kind Attention</p>
-                        <p className="text-sm font-bold text-slate-700">{selectedCircular.kindAttention}</p>
-                      </div>
+                      <p className="text-lg font-bold text-slate-900">
+                        <span className="inline-block min-w-[60px]">Kind Attention:</span> {selectedCircular.kindAttention}
+                      </p>
                     )}
                   </div>
 
                   <div className="mt-8 pt-8 border-t border-slate-100 min-h-[300px]">
                     <div 
-                      className="prose prose-slate max-w-none prose-p:text-slate-600 prose-p:leading-relaxed prose-headings:text-slate-800 prose-headings:font-black prose-strong:text-slate-800"
+                      className="circular-content prose prose-slate max-w-none break-words whitespace-pre-wrap prose-p:text-slate-700 prose-p:leading-relaxed prose-headings:text-slate-900 prose-headings:font-bold prose-strong:text-slate-900"
                       dangerouslySetInnerHTML={{ __html: selectedCircular.content }}
                     />
                     
-                    <div className="mt-16 pt-8 border-t border-slate-50">
-                      <p className="text-sm font-bold text-slate-800 mb-1">Sd/-</p>
-                      <p className="text-sm font-black text-rose-600 uppercase tracking-widest">(HC PAREKH)</p>
-                      <p className="text-xs font-bold text-slate-500 mt-1 italic">For & On behalf of</p>
-                      <p className="text-sm font-black text-slate-800 tracking-tight mt-1">HC PAREKH & ASSOCIATES</p>
+                    <div className="mt-16 pt-8 border-t border-slate-100">
+                      <p className="text-base font-bold text-slate-900 mb-1">Sd/-</p>
+                      <p className="text-base font-bold text-slate-900 uppercase tracking-tight">(HC PAREKH)</p>
+                      <p className="text-sm font-medium text-slate-600 mt-1">For & On behalf of</p>
+                      <p className="text-base font-bold text-slate-900 tracking-tight mt-1">HC PAREKH & ASSOCIATES</p>
                     </div>
                   </div>
                 </div>
@@ -215,7 +212,7 @@ const Circulars = () => {
               <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-center shrink-0">
                 <button
                   onClick={() => window.print()}
-                  className="px-8 py-3 bg-slate-900 text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center gap-2"
+                  className="no-print px-8 py-3 bg-slate-900 text-white font-black rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center gap-2"
                 >
                   <Printer size={18} /> Print Circular
                 </button>
@@ -232,8 +229,34 @@ const Circulars = () => {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
         
         @media print {
+          body * { visibility: hidden; }
+          #printable-area, #printable-area * { visibility: visible; }
+          #printable-area {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            max-width: none;
+            max-height: none;
+            overflow: visible !important;
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            background: white !important;
+          }
           .no-print { display: none !important; }
-          body { background: white !important; }
+          .custom-scrollbar { overflow: visible !important; }
+        }
+
+        .circular-content p {
+          margin-bottom: 0.85rem;
+          min-height: 1em;
+        }
+        .circular-content p:last-child {
+          margin-bottom: 0;
         }
       `}} />
     </div>

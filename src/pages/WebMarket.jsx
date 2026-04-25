@@ -13,7 +13,8 @@ const IT_SERVICES = [
   'Software Development',
   'Mobile App Development',
   'Youtube Marketing',
-  'Influencer Services'
+  'Influencer Services',
+  'Others'
 ];
 
 const MEMBERSHIPS = ['Eco', 'Silver Membership', 'Gold Membership', 'Platinum Membership'];
@@ -56,6 +57,70 @@ const WebMarket = () => {
       } else {
         await webMarketApi.submitServiceProvider(form);
       }
+
+      // Trigger PHP email notification
+      try {
+        const fallbackMessage = activeTab === 'end-user' 
+          ? `END-USER CLIENT ENQUIRY
+----------------------------------------
+Contact Number: ${form.contactNo}
+Address: ${form.address || form.businessAddress}
+Website URL: ${form.website || 'N/A'}
+
+REQUIREMENTS
+----------------------------------------
+Category: ${form.category || 'N/A'}
+Business Nature: ${form.natureOfBusiness || 'N/A'}
+Budget: ${form.budget || 'N/A'}
+Tenure: ${form.tenureRequired || 'N/A'}
+IT Services Required: ${form.itServicesRequired.length > 0 ? form.itServicesRequired.join(', ') : 'None'}
+Other Services: ${form.otherService || 'None'}
+
+Membership Selected: ${form.membershipType}`
+          : `SERVICE PROVIDER ENQUIRY
+----------------------------------------
+Contact Number: ${form.contactNo}
+Address: ${form.address || form.businessAddress}
+Website URL: ${form.websiteUrl || 'N/A'}
+
+PROVIDER DETAILS
+----------------------------------------
+Staff Strength: ${form.technicalStaffCount || 'N/A'}
+Payment Terms: ${form.paymentTerms || 'N/A'}
+IT Services Offered: ${form.itServicesOffered.length > 0 ? form.itServicesOffered.join(', ') : 'None'}
+Other Services: ${form.otherServices || 'None'}
+
+Membership Selected: ${form.membershipType}`;
+
+        const emailPayload = {
+          name: form.name,
+          email: form.email,
+          subject: activeTab === 'end-user' ? 'webmarket_enduser' : 'webmarket_provider',
+          message: fallbackMessage,
+          webMarketData: {
+            contact: form.contactNo,
+            address: form.address || form.businessAddress,
+            website: activeTab === 'end-user' ? form.website : form.websiteUrl,
+            category: form.category || 'N/A',
+            natureOfBusiness: form.natureOfBusiness || 'N/A',
+            technicalStaffCount: form.technicalStaffCount || 'N/A',
+            services: activeTab === 'end-user' ? form.itServicesRequired.join(', ') : form.itServicesOffered.join(', '),
+            otherServices: form.otherService || form.otherServices || 'None',
+            budget: form.budget || 'N/A',
+            tenure: form.tenureRequired || 'N/A',
+            paymentTerms: form.paymentTerms || 'N/A',
+            membership: form.membershipType
+          }
+        };
+        await fetch('https://hcparekh.com/php/send_email.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(emailPayload),
+        });
+      } catch (emailErr) {
+        console.error("Email notification failed to send:", emailErr);
+      }
+
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
@@ -84,16 +149,14 @@ const WebMarket = () => {
 
         <main className="flex-1 min-w-0">
           <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-            
+
             {/* Main Branding Header */}
             {!activeTab && (
               <div className="p-10 md:p-16 text-center border-b border-slate-50">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-xs font-black uppercase tracking-widest">
-                    <Globe size={16} /> HCP Web Market
-                  </div>
-                  <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight uppercase leading-none">
-                    Digital <span className="text-blue-600">Trading</span> Hub
+                 
+                  <h1 className="text-4xl md:text-6xl font-black tracking-tight uppercase leading-none">
+                    <span className="text-black">HCP</span> <span className="text-blue-600">Web Market</span>
                   </h1>
                   <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
                     Choose your platform to get started. A secure gateway for IT solutions and professional service providers.
@@ -143,7 +206,7 @@ const WebMarket = () => {
               /* Active Form View */
               <div className="p-8 md:p-16">
                 <div className="flex items-center justify-between mb-12">
-                  <button 
+                  <button
                     onClick={() => setActiveTab(null)}
                     className="flex items-center gap-2 text-slate-400 hover:text-slate-900 font-black uppercase text-xs tracking-widest transition-all"
                   >
@@ -158,42 +221,46 @@ const WebMarket = () => {
                   {/* Form Section: Basic Info */}
                   <div className="space-y-10">
                     <div className="border-l-4 border-rose-500 pl-6">
-                      <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Personal & Business Details</h2>
+                      <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tight">
+                        {activeTab === 'end-user' ? 'Clients Details' : 'Service Provider Details'}
+                      </h2>
                       <p className="text-slate-500 font-medium mt-1">Please provide accurate information for verification.</p>
                     </div>
 
                     <div className="grid grid-cols-1 gap-8">
                       <div className="space-y-3">
-                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Full Name of the {activeTab === 'end-user' ? 'Client' : 'Provider'}</label>
+                        <label className="text-sm font-black text-slate-700 uppercase tracking-widest">
+                          {activeTab === 'end-user' ? 'Full Name of the Client' : 'Business Name of the Service Provider'}
+                        </label>
                         <input required className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:ring-4 focus:ring-rose-50 focus:border-rose-400 outline-none font-bold text-lg transition-all"
-                          value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+                          value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
                       </div>
 
                       <div className="space-y-3">
                         <label className="text-sm font-black text-slate-700 uppercase tracking-widest">{activeTab === 'end-user' ? 'Complete Postal Address' : 'Registered Business Address'}</label>
                         <textarea required rows={3} className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:ring-4 focus:ring-rose-50 focus:border-rose-400 outline-none font-bold text-lg transition-all resize-none"
-                          value={activeTab === 'end-user' ? form.address : form.businessAddress} 
-                          onChange={e => setForm({...form, [activeTab === 'end-user' ? 'address' : 'businessAddress']: e.target.value})} />
+                          value={activeTab === 'end-user' ? form.address : form.businessAddress}
+                          onChange={e => setForm({ ...form, [activeTab === 'end-user' ? 'address' : 'businessAddress']: e.target.value })} />
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-3">
                           <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Contact Number</label>
                           <input required className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:ring-4 focus:ring-rose-50 focus:border-rose-400 outline-none font-bold text-lg transition-all"
-                            value={form.contactNo} onChange={e => setForm({...form, contactNo: e.target.value})} />
+                            value={form.contactNo} onChange={e => setForm({ ...form, contactNo: e.target.value })} />
                         </div>
                         <div className="space-y-3">
                           <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Official Email Address</label>
                           <input required type="email" className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:ring-4 focus:ring-rose-50 focus:border-rose-400 outline-none font-bold text-lg transition-all"
-                            value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+                            value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
                         </div>
                       </div>
 
                       <div className="space-y-3">
                         <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Website URL {activeTab === 'end-user' && '(Optional)'}</label>
                         <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl focus:ring-4 focus:ring-rose-50 focus:border-rose-400 outline-none font-bold text-lg transition-all"
-                          value={activeTab === 'end-user' ? form.website : form.websiteUrl} 
-                          onChange={e => setForm({...form, [activeTab === 'end-user' ? 'website' : 'websiteUrl']: e.target.value})} />
+                          value={activeTab === 'end-user' ? form.website : form.websiteUrl}
+                          onChange={e => setForm({ ...form, [activeTab === 'end-user' ? 'website' : 'websiteUrl']: e.target.value })} />
                       </div>
                     </div>
                   </div>
@@ -201,7 +268,9 @@ const WebMarket = () => {
                   {/* Form Section: Service Info */}
                   <div className="space-y-10">
                     <div className="border-l-4 border-blue-500 pl-6">
-                      <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Service Requirements</h2>
+                      <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tight">
+                        {activeTab === 'end-user' ? 'Service Requirements' : 'Service Offered'}
+                      </h2>
                       <p className="text-slate-500 font-medium mt-1">Select the services you are interested in.</p>
                     </div>
 
@@ -211,7 +280,7 @@ const WebMarket = () => {
                           <div className="space-y-3">
                             <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Client Category</label>
                             <select className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
-                              value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+                              value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}>
                               <option>Individual</option>
                               <option>Business</option>
                             </select>
@@ -219,7 +288,7 @@ const WebMarket = () => {
                           <div className="space-y-3">
                             <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Nature of Profession</label>
                             <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
-                              value={form.natureOfBusiness} onChange={e => setForm({...form, natureOfBusiness: e.target.value})} />
+                              value={form.natureOfBusiness} onChange={e => setForm({ ...form, natureOfBusiness: e.target.value })} />
                           </div>
                         </div>
                       ) : (
@@ -227,7 +296,7 @@ const WebMarket = () => {
                           <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Technical Staff Strength</label>
                           <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
                             placeholder="e.g. 50+ Engineers"
-                            value={form.technicalStaffCount} onChange={e => setForm({...form, technicalStaffCount: e.target.value})} />
+                            value={form.technicalStaffCount} onChange={e => setForm({ ...form, technicalStaffCount: e.target.value })} />
                         </div>
                       )}
 
@@ -243,25 +312,27 @@ const WebMarket = () => {
                             </label>
                           ))}
                         </div>
-                        <input placeholder="Specify any other services required..." className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
-                          value={activeTab === 'end-user' ? form.otherService : form.otherServices} 
-                          onChange={e => setForm({...form, [activeTab === 'end-user' ? 'otherService' : 'otherServices']: e.target.value})} />
+                        {form[activeTab === 'end-user' ? 'itServicesRequired' : 'itServicesOffered'].includes('Others') && (
+                          <input placeholder="Specify any other services required..." className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
+                            value={activeTab === 'end-user' ? form.otherService : form.otherServices}
+                            onChange={e => setForm({ ...form, [activeTab === 'end-user' ? 'otherService' : 'otherServices']: e.target.value })} />
+                        )}
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="flex flex-col sm:flex-row gap-8">
                         {activeTab === 'end-user' ? (
                           <>
-                            <div className="space-y-3">
+                            <div className="flex-1 space-y-3">
                               <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Service Tenure</label>
                               <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
                                 placeholder="e.g. 1 Year"
-                                value={form.tenureRequired} onChange={e => setForm({...form, tenureRequired: e.target.value})} />
+                                value={form.tenureRequired} onChange={e => setForm({ ...form, tenureRequired: e.target.value })} />
                             </div>
-                            <div className="space-y-3">
-                              <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Project Budget</label>
+                            <div className="flex-1 space-y-3">
+                              <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Client Budget</label>
                               <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
                                 placeholder="e.g. ₹5,00,000"
-                                value={form.budget} onChange={e => setForm({...form, budget: e.target.value})} />
+                                value={form.budget} onChange={e => setForm({ ...form, budget: e.target.value })} />
                             </div>
                           </>
                         ) : (
@@ -269,13 +340,13 @@ const WebMarket = () => {
                             <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Payment Terms & Conditions</label>
                             <input className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg"
                               placeholder="Describe your standard payment structure..."
-                              value={form.paymentTerms} onChange={e => setForm({...form, paymentTerms: e.target.value})} />
+                              value={form.paymentTerms} onChange={e => setForm({ ...form, paymentTerms: e.target.value })} />
                           </div>
                         )}
                         <div className="col-span-2 space-y-3">
                           <label className="text-sm font-black text-slate-700 uppercase tracking-widest">Membership Selection</label>
                           <select className="w-full px-6 py-5 bg-slate-50 border border-slate-200 rounded-3xl outline-none font-bold text-lg appearance-none"
-                            value={form.membershipType} onChange={e => setForm({...form, membershipType: e.target.value})}>
+                            value={form.membershipType} onChange={e => setForm({ ...form, membershipType: e.target.value })}>
                             {MEMBERSHIPS.map(m => <option key={m} value={m}>{m}</option>)}
                           </select>
                         </div>
@@ -284,9 +355,9 @@ const WebMarket = () => {
                   </div>
 
                   {/* Authorization Section */}
-                  <div className="bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 text-white relative overflow-hidden shadow-2xl shadow-rose-900/20">
+                  <div className="bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 text-white relative overflow-hidden shadow-2xl shadow-rose-900/20">
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-600 blur-[150px] opacity-10 rounded-full -mr-64 -mt-64" />
-                    <div className="relative z-10 space-y-8 md:space-y-12">
+                    <div className="relative z-10 space-y-6 md:space-y-8">
                       <div className="text-center space-y-4">
                         <div className="w-16 h-16 md:w-20 md:h-20 bg-rose-600/20 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
                           <ShieldCheck className="w-10 h-10 md:w-12 md:h-12" />
@@ -299,26 +370,23 @@ const WebMarket = () => {
                         <div className="space-y-3">
                           <label className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">Authorized Official Name</label>
                           <input required className="w-full px-6 md:px-8 py-4 md:py-6 bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl focus:bg-white/10 focus:border-rose-500 outline-none font-black text-xl md:text-2xl transition-all text-center tracking-tight"
-                            value={form.authorizedOfficial} onChange={e => setForm({...form, authorizedOfficial: e.target.value})} />
+                            value={form.authorizedOfficial} onChange={e => setForm({ ...form, authorizedOfficial: e.target.value })} />
                         </div>
                         <div className="space-y-3">
                           <label className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">Assess Code Number</label>
                           <input required className="w-full px-6 md:px-8 py-4 md:py-6 bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl focus:bg-white/10 focus:border-rose-500 outline-none font-black text-xl md:text-2xl transition-all text-center tracking-[0.1em] md:tracking-[0.2em]"
-                            value={form.assessCode} onChange={e => setForm({...form, assessCode: e.target.value})} />
+                            value={form.assessCode} onChange={e => setForm({ ...form, assessCode: e.target.value })} />
                         </div>
                       </div>
 
                       <div className="flex flex-col items-center gap-4 md:gap-6 pt-4">
-                        <motion.button 
+                        <motion.button
                           whileTap={{ scale: 0.95 }}
                           type="submit" disabled={loading}
                           className="w-full max-w-md py-4 md:py-6 bg-rose-600 text-white rounded-2xl md:rounded-3xl font-black uppercase tracking-widest text-base md:text-lg hover:bg-rose-700 transition-all shadow-2xl shadow-rose-900/60 disabled:opacity-50"
                         >
-                          {loading ? 'Validating...' : 'Submit Final Enquiry'}
+                          {loading ? 'Validating...' : 'Submit'}
                         </motion.button>
-                        <div className="flex items-center gap-2 text-slate-500 text-xs md:text-sm font-bold italic">
-                          <Mail size={14} /> Data will be sent to services@hcparekh.com
-                        </div>
                       </div>
 
                       <AnimatePresence>
@@ -364,8 +432,8 @@ const WebMarket = () => {
               <div className="bg-white p-12 rounded-[3rem] shadow-xl border border-slate-100 space-y-8">
                 <div className="space-y-2">
                   <span className="text-rose-600 font-black uppercase tracking-widest text-xs">Guidelines</span>
-                  <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Terms & Conditions</h3>
-                  <p className="text-lg text-slate-600 font-medium leading-relaxed">GENERAL TERMS & CONDITIONS AND GUIDELINES. Please refer to our official Manual for complete compliance details.</p>
+                  <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Benefits & Facilities</h3>
+                  <p className="text-lg text-slate-600 font-medium leading-relaxed">Please refer to our official Manual for complete compliance details.</p>
                 </div>
                 <div className="space-y-2">
                   <span className="text-rose-600 font-black uppercase tracking-widest text-xs">Security</span>
@@ -405,7 +473,8 @@ const WebMarket = () => {
       </div>
 
       <Footer />
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
         body { font-family: 'Inter', sans-serif; }
