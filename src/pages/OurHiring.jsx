@@ -158,7 +158,7 @@ export default function OurHiring() {
                                                             <p className="text-[10px] font-black text-[#94a3b8] uppercase tracking-widest mb-2">{job.emailHeading || 'Email To:'}</p>
                                                             <div className="flex flex-col gap-2">
                                                                 {(job.emails && job.emails.length > 0 ? job.emails : []).map((email, eIdx) => (
-                                                                    <a key={eIdx} href={`mailto:${email}`} className="inline-block text-[#d8b4fe] font-black text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors break-all">
+                                                                    <a key={eIdx} href={`mailto:${email}`} className="inline-block text-[#d8b4fe] font-black text-[15px] sm:text-[17px] underline decoration-[#c084fc]/40 xl:no-underline xl:hover:underline underline-offset-4 hover:text-white transition-colors whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
                                                                         {email}
                                                                     </a>
                                                                 ))}

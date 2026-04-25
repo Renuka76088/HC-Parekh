@@ -3,11 +3,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import { corporateApi } from '../api';
-import { 
-  FileText, 
-  Search, 
-  Calendar, 
-  ArrowRight, 
+import {
+  FileText,
+  Search,
+  Calendar,
+  ArrowRight,
   Printer,
   X
 } from 'lucide-react';
@@ -35,14 +35,14 @@ const Circulars = () => {
     }
   };
 
-  const filteredCirculars = circulars.filter(c => 
+  const filteredCirculars = circulars.filter(c =>
     c.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
     c.circularNo?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
-    if (dateString.includes('.')) return dateString; 
+    if (dateString.includes('.')) return dateString;
     try {
       return new Date(dateString).toLocaleDateString('en-GB', {
         day: '2-digit',
@@ -62,7 +62,7 @@ const Circulars = () => {
 
   const truncateContent = (html, limit = 35) => {
     if (!html) return '';
-    let text = html.replace(/<[^>]*>/g, ' '); 
+    let text = html.replace(/<[^>]*>/g, ' ');
     text = decodeHtml(text);
     text = text.replace(/\s+/g, ' ').trim();
     const words = text.split(' ');
@@ -79,7 +79,7 @@ const Circulars = () => {
 
         <main className="flex-1 min-w-0 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden no-print">
           <div className="p-8 md:p-12">
-            
+
             {/* Header Section (Matching Corporate Tenders Style) */}
             <div className="border-b border-slate-200 pb-8 mb-8">
               <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
@@ -107,7 +107,7 @@ const Circulars = () => {
                 OFFICIAL <span className="text-rose-600">CIRCULARS</span>
               </h1>
               <p className="text-lg text-slate-500 font-medium max-w-2xl">
-                Stay updated with the latest official announcements and directives from <span className="whitespace-nowrap font-bold">HC Parekh</span> & Associates.
+                Stay updated with the latest official announcements and directives from <span className="whitespace-nowrap font-bold text-slate-900">HC Parekh & Associates</span>.
               </p>
             </div>
 
@@ -151,15 +151,15 @@ const Circulars = () => {
                           </p>
 
                           <div className="flex items-center gap-6">
-                            <button 
+                            <button
                               onClick={() => setSelectedCircular(circular)}
                               className="flex items-center gap-2 text-xs font-black text-slate-900 hover:text-rose-600 transition-colors group/btn"
                             >
                               <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                               VIEW DETAILS
                             </button>
-                            
-                            <button 
+
+                            <button
                               onClick={() => {
                                 setSelectedCircular(circular);
                                 setTimeout(() => window.print(), 200);
@@ -233,28 +233,28 @@ const Circulars = () => {
 
                   <div className="space-y-6">
                     <div className="flex gap-3">
-                      <span className="font-black text-slate-900 shrink-0 text-lg">Sub :</span> 
+                      <span className="font-black text-slate-900 shrink-0 text-lg">Sub :</span>
                       <p className="text-xl font-bold text-slate-900 leading-tight">{selectedCircular.subject}</p>
                     </div>
                     {selectedCircular.kindAttention && (
                       <div className="flex gap-3">
-                        <span className="font-black text-slate-900 shrink-0 text-lg">Kind Attention:</span> 
+                        <span className="font-black text-slate-900 shrink-0 text-lg">Kind Attention:</span>
                         <p className="text-xl font-bold text-slate-900 leading-tight">{selectedCircular.kindAttention}</p>
                       </div>
                     )}
                   </div>
 
                   <div className="mt-12 pt-10 border-t border-slate-100 min-h-[400px]">
-                    <div 
-                      className="circular-content prose prose-slate max-w-none prose-p:text-slate-700 prose-p:leading-[1.8] prose-p:text-lg prose-headings:text-slate-900 prose-headings:font-bold prose-strong:text-slate-900"
+                    <div
+                      className="circular-content break-normal whitespace-normal prose prose-slate max-w-none prose-p:text-slate-700 prose-p:leading-[1.8] prose-p:text-lg prose-headings:text-slate-900 prose-headings:font-bold prose-strong:text-slate-900"
                       style={{ wordBreak: 'normal', overflowWrap: 'break-word' }}
                       dangerouslySetInnerHTML={{ __html: selectedCircular.content }}
                     />
-                    
+
                     <div className="mt-20 pt-10 border-t border-slate-100">
                       <p className="text-lg font-bold text-slate-900 mb-1">Sd/-</p>
-                      <p className="text-xl font-black text-slate-900 uppercase tracking-tight">(HC PAREKH)</p>
-                      <p className="text-base font-semibold text-slate-500 mt-1">For & On behalf of</p>
+                      <p className=" text-xl font-semibold text-slate-500 mt-1">(HC PAREKH)</p>
+                      <p className="text-xl font-semibold text-slate-500 mt-1">For & On behalf of</p>
                       <p className="text-lg font-bold text-slate-900 tracking-tight mt-1">HC PAREKH & ASSOCIATES</p>
                     </div>
                   </div>
@@ -274,35 +274,59 @@ const Circulars = () => {
         )}
       </AnimatePresence>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 20px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
         
         @media print {
-          body * { 
+          body, html { 
             visibility: hidden; 
+            height: auto !important;
+            overflow: visible !important;
           }
           #printable-area, #printable-area * { 
             visibility: visible;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
-          #printable-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
+          /* Break the flexbox/fixed constraints for print */
+          .fixed.inset-0 {
+            position: absolute !important;
             display: block !important;
+            overflow: visible !important;
+            height: auto !important;
+            z-index: auto !important;
             background: white !important;
-            padding: 40px !important;
+          }
+          #printable-area {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 20px !important;
+            border: none !important;
+            box-shadow: none !important;
+            transform: none !important;
+          }
+          /* Ensure the scrollable container expands fully */
+          .custom-scrollbar, .overflow-y-auto, .flex-1 { 
+            overflow: visible !important;
+            height: auto !important;
+            max-height: none !important;
+            display: block !important;
+            flex: none !important;
+            padding: 0 !important;
           }
           .no-print { 
             display: none !important; 
-          }
-          .custom-scrollbar { 
-            overflow: visible !important; 
           }
           .circular-content, .circular-content * {
             word-break: normal !important;

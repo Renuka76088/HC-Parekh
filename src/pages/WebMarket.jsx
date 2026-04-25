@@ -222,7 +222,7 @@ Membership Selected: ${form.membershipType}`;
                   <div className="space-y-10">
                     <div className="border-l-4 border-rose-500 pl-6">
                       <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tight">
-                        {activeTab === 'end-user' ? 'Clients Details' : 'Service Provider Details'}
+                        {activeTab === 'end-user' ? 'Client Details' : 'Service Provider Details'}
                       </h2>
                       <p className="text-slate-500 font-medium mt-1">Please provide accurate information for verification.</p>
                     </div>
