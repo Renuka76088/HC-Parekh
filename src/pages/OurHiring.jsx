@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
-import { Megaphone, Instagram, Facebook, Linkedin, Youtube, Mail, Info } from 'lucide-react';
+import { Megaphone, Instagram, Facebook, Linkedin, Youtube, Mail, Info, ArrowRight } from 'lucide-react';
 
 import { workforceApi } from '../api';
 
@@ -65,143 +65,115 @@ export default function OurHiring() {
                         </div>
 
                         {/* Hiring Listings */}
-                        <div className="space-y-24">
+                        <div className="space-y-12">
                             {vacancies.map((job, idx) => {
-                                const platformIcons = {
-                                    linkedin: <Linkedin size={18} className="text-[#0077b5] shrink-0" />,
-                                    facebook: <Facebook size={18} className="text-[#1877f2] shrink-0" />,
-                                    instagram: <Instagram size={18} className="text-[#e4405f] shrink-0" />,
-                                    youtube: <Youtube size={18} className="text-[#ff0000] shrink-0" />
-                                };
-
-                                const getIcon = (plat) => {
-                                    const p = plat.toLowerCase();
-                                    if (p.includes('linkedin')) return platformIcons.linkedin;
-                                    if (p.includes('facebook')) return platformIcons.facebook;
-                                    if (p.includes('instagram')) return platformIcons.instagram;
-                                    if (p.includes('youtube') || p.includes('tube')) return platformIcons.youtube;
-                                    return <Megaphone size={18} className="text-slate-400 shrink-0" />;
-                                };
-
                                 const targetSectors = Array.isArray(job.targetSectors) ? job.targetSectors : (typeof job.targetSectors === 'string' ? job.targetSectors.split('\n') : []);
                                 const requiredPlatforms = Array.isArray(job.requiredPlatforms) ? job.requiredPlatforms : (typeof job.requiredPlatforms === 'string' ? job.requiredPlatforms.split('\n') : []);
-
-                                const topBadgeText = job.type || 'HIRING';
-                                const campaignBadge = job.campaign ? job.campaign : 'OFFICIAL';
+                                const isContract = job.type?.toLowerCase().includes('contract');
 
                                 return (
-                                    <div key={job._id || idx} className="w-full">
-                                        {/* Badges */}
-                                        <div className="flex flex-wrap items-center gap-2 mb-4">
-                                            <span className="bg-[#0f172a] text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                                                {topBadgeText}
-                                            </span>
-                                            <span className="text-slate-300">•</span>
-                                            <span className="text-[#64748b] text-[11px] font-bold uppercase tracking-widest">
-                                                {job.campaignHeading || 'CAMPAIGN'} : {campaignBadge}
-                                            </span>
-                                        </div>
+                                    <div key={job._id || idx} className="w-full bg-[#f8fafc] p-6 md:p-10 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden flex gap-0">
+                                        {/* Red Left Accent */}
+                                        <div className="absolute left-0 top-6 bottom-6 w-1.5 bg-[#991b1b] rounded-r-full"></div>
 
-                                        {/* Title & Subtitle */}
-                                        <h2 className="text-2xl md:text-3xl leading-tight font-bold text-[#0f172a] mb-2">
-                                            {job.title} {!job.title?.toLowerCase().includes('contract') && job.type === 'On Contract' ? '(On Contract)' : ''}
-                                        </h2>
-                                        {job.campaign && (
-                                            <h3 className="text-lg font-bold text-[#6366f1] mb-2">{job.campaign}</h3>
-                                        )}
-                                        <p className="text-slate-400 text-sm font-medium mb-8">Date of Publish {formatDate(job.createdAt)}</p>
-
-                                        {/* Description */}
-                                        <div className="mb-10 min-h-[60px]">
-                                            <p className="text-[1.1rem] text-[#475569] leading-relaxed max-w-4xl">
-                                                {job.description}
-                                            </p>
-                                        </div>
-
-                                        <div className="flex flex-col gap-8 mt-10">
-                                            <div className="grid grid-cols-1 2xl:grid-cols-2 gap-8 items-stretch">
-                                                {/* Left Column: Sectors */}
-                                                {targetSectors.length > 0 && (
-                                                    <div className={`bg-[#fdfaff] p-6 lg:p-8 rounded-[2.5rem] border border-[#f3e8ff] ${requiredPlatforms.length === 0 ? '2xl:col-span-2' : ''}`}>
-                                                        <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-8 flex items-center gap-3">
-                                                            <div className="w-2 h-8 bg-purple-500 rounded-full"></div>
-                                                            {job.targetSectorsHeading || 'Target Sectors'}
-                                                        </h3>
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                            {targetSectors.filter(t => typeof t === 'string' ? t.trim() : t).map((sector, sIdx) => (
-                                                                <div key={sIdx} className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-sm border border-[#f1f5f9] hover:shadow-md transition-shadow min-w-0">
-                                                                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100">
-                                                                        <Megaphone className="text-slate-400" size={18} />
-                                                                    </div>
-                                                                    <span className="text-[#334155] font-bold text-[15px] min-w-0">{typeof sector === 'string' ? sector.trim() : sector}</span>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {/* Required Platforms */}
-                                                {requiredPlatforms.length > 0 && (
-                                                    <div className={`bg-[#f8fafc] p-6 lg:p-8 rounded-[2.5rem] shadow-sm border border-slate-100 ${targetSectors.length === 0 ? '2xl:col-span-2' : ''}`}>
-                                                        <h3 className="text-[1.25rem] font-bold text-[#0f172a] mb-8 flex items-center gap-3">
-                                                            <div className="w-2 h-8 bg-indigo-500 rounded-full"></div>
-                                                            {job.requiredPlatformsHeading || 'Required Platforms'}
-                                                        </h3>
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                            {requiredPlatforms.filter(p => typeof p === 'string' ? p.trim() : p).map((plat, pIdx) => (
-                                                                <div key={pIdx} className="bg-white px-5 py-4 rounded-[1.25rem] border border-[#f1f5f9] flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow min-w-0">
-                                                                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100">
-                                                                        {getIcon(typeof plat === 'string' ? plat : '')}
-                                                                    </div>
-                                                                    <span className="text-[#334155] font-bold text-[15px] min-w-0">{typeof plat === 'string' ? plat.trim() : plat}</span>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
+                                        <div className="pl-6 w-full">
+                                            {/* Header Row */}
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+                                                    {job.title}
+                                                </h2>
+                                                {isContract && (
+                                                    <span className="bg-[#991b1b] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                                        ON CONTRACT
+                                                    </span>
                                                 )}
                                             </div>
 
-                                            {/* Apply Now - Full Width Banner */}
-                                            <div className="bg-[#0f172a] md:bg-gradient-to-br md:from-[#1e1b4b] md:via-[#0f172a] md:to-[#1e1b4b] p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
-                                                {/* Decorative Elements */}
-                                                <div className="hidden md:block absolute top-[-20%] right-[-10%] w-80 h-80 bg-purple-600 blur-[100px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity" />
-                                                <div className="hidden md:block absolute bottom-[-20%] left-[-10%] w-80 h-80 bg-indigo-600 blur-[100px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity" />
+                                            <p className="text-slate-500 font-medium mb-10">
+                                                Date of Publish {formatDate(job.createdAt)}.
+                                            </p>
 
-                                                <div className="relative z-10 flex flex-col gap-8 md:gap-10">
-                                                    <div>
-                                                        <div className="flex items-center gap-4 mb-4 md:mb-6">
-                                                            <div className="md:bg-white/10 md:p-3 rounded-2xl md:backdrop-blur-sm md:border md:border-white/10">
-                                                                <Mail className="text-[#c084fc]" size={28} />
+                                            {/* Quotation Emails */}
+                                            <div className="mb-10">
+                                                <h4 className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider mb-3">
+                                                    {job.emailHeading || 'QUOTATION EMAILS'}
+                                                </h4>
+                                                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                                                    {(job.emails || []).map((email, eIdx) => (
+                                                        <a key={eIdx} href={`mailto:${email.toLowerCase()}`} className="text-[1.1rem] font-bold text-[#991b1b] hover:underline underline-offset-4 decoration-[#991b1b]/30 transition-all">
+                                                            {email.toLowerCase()}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Profile Section */}
+                                            {targetSectors.length > 0 && (
+                                                <div className="mb-10">
+                                                    <h4 className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider mb-4">
+                                                        {job.targetSectorsHeading || 'PROFILE'}
+                                                    </h4>
+                                                    <div className="flex flex-wrap gap-3">
+                                                        {targetSectors.filter(t => t.trim()).map((sector, sIdx) => (
+                                                            <div key={sIdx} className="bg-[#eff6ff] text-[#1e40af] border border-[#dbeafe] px-5 py-2.5 rounded-2xl font-bold text-sm tracking-tight shadow-sm">
+                                                                {sIdx + 1}. {sector.trim()}
                                                             </div>
-                                                            <h3 className="text-2xl md:text-4xl font-bold text-white">
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Required Criteria */}
+                                            {requiredPlatforms.length > 0 && (
+                                                <div className="mb-10">
+                                                    <h4 className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider mb-4">
+                                                        {job.requiredPlatformsHeading || 'REQUIRED CRITERIA'}
+                                                    </h4>
+                                                    <div className="flex flex-wrap gap-3">
+                                                        {requiredPlatforms.filter(p => p.trim()).map((plat, pIdx) => (
+                                                            <div key={pIdx} className="bg-[#f0fdf4] text-[#166534] border border-[#dcfce7] px-4 py-2 rounded-xl font-bold text-[13px] shadow-sm">
+                                                                {plat.trim()}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Apply Now Section - Commented out as requested
+                                            <div className="mt-8 pt-8 border-t border-slate-100">
+                                                <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden group">
+                                                    <div className="absolute -right-20 -top-20 w-64 h-64 bg-rose-500/10 blur-[80px] rounded-full group-hover:bg-rose-500/20 transition-all duration-700"></div>
+                                                    
+                                                    <div className="relative z-10">
+                                                        <div className="flex items-center gap-3 mb-4">
+                                                            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
+                                                                <Mail className="text-rose-400" size={20} />
+                                                            </div>
+                                                            <h3 className="text-xl font-bold tracking-tight">
                                                                 {job.applyNowTitle || 'Apply Now'}
                                                             </h3>
                                                         </div>
-                                                        <p className="text-[#cbd5e1] text-base md:text-xl leading-relaxed font-normal">
+
+                                                        <p className="text-slate-400 font-medium mb-6 leading-relaxed max-w-2xl">
                                                             {job.quotationInstruction || "Submit your Quotation in PDF format including payment terms."}
                                                         </p>
-                                                    </div>
 
-                                                    <div className="pt-8 md:pt-10 border-t border-white/10">
-                                                        <p className="text-[10px] md:text-[12px] font-bold text-[#94a3b8] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6 flex items-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
-                                                            {job.emailHeading || 'Email To:'}
-                                                        </p>
-                                                        <div className="flex flex-col md:flex-wrap md:flex-row gap-4">
-                                                            {(job.emails && job.emails.length > 0 ? job.emails : []).map((email, eIdx) => (
-                                                                <a key={eIdx} href={`mailto:${email.toLowerCase()}`} className="group/email flex items-center gap-4 md:bg-white/5 md:hover:bg-white/10 md:px-6 md:py-4 md:rounded-2xl md:border md:border-white/5 md:hover:border-white/20 transition-all duration-300">
-                                                                    <span className="text-[#d8b4fe] font-bold text-base md:text-xl break-all underline md:no-underline underline-offset-4 decoration-[#c084fc]/40">
-                                                                        {email.toLowerCase()}
-                                                                    </span>
-                                                                    <div className="hidden md:flex w-10 h-10 rounded-full bg-white/10 items-center justify-center group-hover/email:bg-[#c084fc] transition-colors">
-                                                                        <Mail size={18} className="text-white" />
-                                                                    </div>
+                                                        <div className="flex flex-wrap gap-3">
+                                                            {(job.emails || []).map((email, eIdx) => (
+                                                                <a 
+                                                                    key={eIdx} 
+                                                                    href={`mailto:${email.toLowerCase()}`}
+                                                                    className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 px-5 py-2.5 rounded-xl text-rose-300 font-bold text-sm transition-all flex items-center gap-2"
+                                                                >
+                                                                    {email.toLowerCase()}
+                                                                    <ArrowRight size={14} className="opacity-50" />
                                                                 </a>
                                                             ))}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            */}
                                         </div>
                                     </div>
                                 );

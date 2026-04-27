@@ -81,33 +81,19 @@ const Circulars = () => {
           <div className="p-8 md:p-12">
 
             {/* Header Section (Matching Corporate Tenders Style) */}
-            <div className="border-b border-slate-200 pb-8 mb-8">
-              <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
-                <div className="flex items-center gap-3">
-                  <span className="bg-rose-100 text-rose-700 p-2 rounded-lg">
-                    <FileText size={24} />
-                  </span>
-                  <span className="text-rose-700 font-bold tracking-wider text-sm uppercase">Official Publication</span>
-                </div>
-
-                {/* Search Bar inside header area */}
-                <div className="relative group max-w-xs w-full">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-rose-500 transition-colors" size={16} />
-                  <input
-                    type="text"
-                    placeholder="Search circulars..."
-                    className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-500/5 transition-all text-sm font-medium text-slate-600"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
+            {/* Header Section */}
+            <div className="border-b border-slate-200 pb-8 mb-12">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="bg-rose-100 text-rose-700 p-2 rounded-lg">
+                  <FileText size={24} />
+                </span>
+                <span className="text-rose-700 font-bold tracking-wider text-sm uppercase">Official Publication</span>
               </div>
-
-              <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">
+              <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-2 font-display">
                 OFFICIAL <span className="text-rose-600">CIRCULARS</span>
               </h1>
-              <p className="text-lg text-slate-500 font-medium max-w-2xl">
-                Stay updated with the latest official announcements and directives from <span className="whitespace-nowrap font-bold text-slate-900">HC Parekh & Associates</span>.
+              <p className="text-xl text-slate-500 font-medium max-w-2xl">
+                Stay updated with the latest official announcements and directives from <span className="font-bold text-slate-900">HC Parekh & Associates</span>.
               </p>
             </div>
 
@@ -121,16 +107,22 @@ const Circulars = () => {
                 </div>
               ) : filteredCirculars.length > 0 ? (
                 <div className="grid grid-cols-1 gap-6">
-                    {filteredCirculars.map((circular, index) => (
+                  {filteredCirculars.map((circular, index) => {
+                    const pdfLink = circular.pdfUrl || circular.pdf;
+                    
+                    return (
                       <motion.div
                         key={circular._id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="group bg-[#f8fafc] p-6 md:p-8 rounded-[2rem] border border-slate-100 hover:border-rose-200 transition-all duration-300 hover:bg-white hover:shadow-lg"
+                        className="group bg-[#f8fafc] p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm relative overflow-hidden"
                       >
-                        <div className="flex flex-col md:flex-row gap-6 items-center">
-                          <div className="w-14 h-14 bg-white text-rose-600 rounded-2xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+                        {/* Rose Left Accent */}
+                        <div className="absolute left-0 top-6 bottom-6 w-1.5 bg-rose-600 rounded-r-full"></div>
+
+                        <div className="flex flex-col md:flex-row gap-6 items-center pl-4">
+                          <div className="w-14 h-14 bg-white text-rose-600 rounded-2xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform border border-slate-50">
                             <FileText size={24} />
                           </div>
   
@@ -143,11 +135,11 @@ const Circulars = () => {
 
                           <div className="flex items-center gap-3">
                             <a
-                              href={circular.pdfUrl || '#'}
-                              target={circular.pdfUrl ? "_blank" : "_self"}
+                              href={pdfLink || '#'}
+                              target={pdfLink ? "_blank" : "_self"}
                               rel="noopener noreferrer"
                               onClick={(e) => {
-                                if (!circular.pdfUrl) {
+                                if (!pdfLink) {
                                   e.preventDefault();
                                   alert('No PDF document is attached to this circular.');
                                 }
@@ -159,11 +151,11 @@ const Circulars = () => {
                             </a>
   
                             <a
-                              href={circular.pdfUrl || '#'}
-                              target={circular.pdfUrl ? "_blank" : "_self"}
+                              href={pdfLink || '#'}
+                              target={pdfLink ? "_blank" : "_self"}
                               rel="noopener noreferrer"
                               onClick={(e) => {
-                                if (!circular.pdfUrl) {
+                                if (!pdfLink) {
                                   e.preventDefault();
                                   alert('No PDF document is attached to this circular.');
                                 }
@@ -176,7 +168,8 @@ const Circulars = () => {
                           </div>
                         </div>
                       </motion.div>
-                    ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="text-center py-16 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
