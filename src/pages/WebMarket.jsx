@@ -8,11 +8,11 @@ import { webMarketApi } from '../api';
 
 const IT_SERVICES = [
   'Website Development',
-  'Digital marketing',
+  'Digital Marketing',
   'Social Media Marketing',
   'Software Development',
   'Mobile App Development',
-  'Youtube Marketing',
+  'YouTube Marketing',
   'Influencer Services',
   'Others'
 ];
@@ -363,7 +363,7 @@ Membership Selected: ${form.membershipType}`;
                           <ShieldCheck className="w-10 h-10 md:w-12 md:h-12" />
                         </div>
                         <h4 className="text-2xl md:text-4xl font-black tracking-tight uppercase leading-tight">Security Authorization</h4>
-                        <p className="text-slate-400 text-sm md:text-lg font-medium max-w-lg mx-auto leading-relaxed">Please enter your official Assess Authorization codes to finalize submission.</p>
+                        <p className="text-slate-400 text-sm md:text-lg font-medium max-w-lg mx-auto leading-relaxed">Please enter your official Access Authorization codes to finalize submission.</p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
@@ -373,7 +373,7 @@ Membership Selected: ${form.membershipType}`;
                             value={form.authorizedOfficial} onChange={e => setForm({ ...form, authorizedOfficial: e.target.value })} />
                         </div>
                         <div className="space-y-3">
-                          <label className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">Assess Code Number</label>
+                          <label className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-[0.2em] md:tracking-[0.3em]">Access Code Number</label>
                           <input required className="w-full px-6 md:px-8 py-4 md:py-6 bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl focus:bg-white/10 focus:border-rose-500 outline-none font-black text-xl md:text-2xl transition-all text-center tracking-[0.1em] md:tracking-[0.2em]"
                             value={form.assessCode} onChange={e => setForm({ ...form, assessCode: e.target.value })} />
                         </div>
