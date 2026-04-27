@@ -81,10 +81,18 @@ export default function Contact() {
         setIsSubmitting(true);
 
         try {
+            const emailPayload = {
+                to: 'hcparekh.associates@gmail.com',
+                name: formState.name,
+                email: formState.email,
+                subject: `Contact Enquiry: ${formState.subject}`,
+                message: `CONTACT ENQUIRY\n----------------------------------------\nName: ${formState.name}\nEmail: ${formState.email}\nTopic: ${formState.subject}\n\nMessage:\n${formState.message}`
+            };
+
             const response = await fetch('https://hcparekh.com/php/send_email.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formState),
+                body: JSON.stringify(emailPayload),
             });
 
             const result = await response.json();
