@@ -82,27 +82,41 @@ export default function OurHiring() {
                                                 <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
                                                     {job.title}
                                                 </h2>
-                                                {isContract && (
+                                                {job.type && job.type !== 'nil/nothing' && (
                                                     <span className="bg-[#991b1b] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                                        ON CONTRACT
+                                                        {job.type}
                                                     </span>
                                                 )}
                                             </div>
 
-                                            <p className="text-slate-500 font-medium mb-10">
+                                            <p className="text-slate-500 font-medium mb-6">
                                                 Date of Publish {formatDate(job.createdAt)}.
                                             </p>
+
+                                            {/* Job Description Section */}
+                                            <div className="mb-10">
+                                                <h4 className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider mb-3">
+                                                    {job.descriptionHeading || 'JOB DESCRIPTION'}
+                                                </h4>
+                                                <div 
+                                                    className="quill-content text-slate-600 font-medium leading-relaxed"
+                                                    dangerouslySetInnerHTML={{ __html: job.description.replace(/&nbsp;/g, ' ') }}
+                                                />
+                                            </div>
 
                                             {/* Quotation Emails */}
                                             <div className="mb-10">
                                                 <h4 className="text-[10px] font-bold text-[#94a3b8] uppercase tracking-wider mb-3">
                                                     {job.emailHeading || 'QUOTATION EMAILS'}
                                                 </h4>
-                                                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                                                <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
                                                     {(job.emails || []).map((email, eIdx) => (
-                                                        <a key={eIdx} href={`mailto:${email.toLowerCase()}`} className="text-[1.1rem] font-bold text-[#991b1b] hover:underline underline-offset-4 decoration-[#991b1b]/30 transition-all">
-                                                            {email.toLowerCase()}
-                                                        </a>
+                                                        <React.Fragment key={eIdx}>
+                                                            <a href={`mailto:${email.toLowerCase()}`} className="text-[1.1rem] font-bold text-[#2563eb] hover:underline underline-offset-4 decoration-[#2563eb]/30 transition-all">
+                                                                {email.toLowerCase()}
+                                                            </a>
+                                                            {eIdx < job.emails.length - 1 && <span className="text-[#2563eb] font-bold">,</span>}
+                                                        </React.Fragment>
                                                     ))}
                                                 </div>
                                             </div>
@@ -138,42 +152,6 @@ export default function OurHiring() {
                                                     </div>
                                                 </div>
                                             )}
-
-                                            {/* Apply Now Section - Commented out as requested
-                                            <div className="mt-8 pt-8 border-t border-slate-100">
-                                                <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden group">
-                                                    <div className="absolute -right-20 -top-20 w-64 h-64 bg-rose-500/10 blur-[80px] rounded-full group-hover:bg-rose-500/20 transition-all duration-700"></div>
-                                                    
-                                                    <div className="relative z-10">
-                                                        <div className="flex items-center gap-3 mb-4">
-                                                            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/10">
-                                                                <Mail className="text-rose-400" size={20} />
-                                                            </div>
-                                                            <h3 className="text-xl font-bold tracking-tight">
-                                                                {job.applyNowTitle || 'Apply Now'}
-                                                            </h3>
-                                                        </div>
-
-                                                        <p className="text-slate-400 font-medium mb-6 leading-relaxed max-w-2xl">
-                                                            {job.quotationInstruction || "Submit your Quotation in PDF format including payment terms."}
-                                                        </p>
-
-                                                        <div className="flex flex-wrap gap-3">
-                                                            {(job.emails || []).map((email, eIdx) => (
-                                                                <a 
-                                                                    key={eIdx} 
-                                                                    href={`mailto:${email.toLowerCase()}`}
-                                                                    className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 px-5 py-2.5 rounded-xl text-rose-300 font-bold text-sm transition-all flex items-center gap-2"
-                                                                >
-                                                                    {email.toLowerCase()}
-                                                                    <ArrowRight size={14} className="opacity-50" />
-                                                                </a>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            */}
                                         </div>
                                     </div>
                                 );

@@ -59,9 +59,10 @@ export default function ProjectNotice() {
                             {notices.map((notice, nIdx) => (
                                 <div key={notice._id || nIdx} className="space-y-8 animate-in fade-in duration-500">
                                     <div className="prose prose-slate max-w-none">
-                                        <h2 className="text-2xl font-black text-slate-900 border-l-4 border-rose-600 pl-4">{notice.title}</h2>
+                                        <h2 className="text-2xl font-bold text-slate-900 border-l-4 border-rose-600 pl-4">{notice.title}</h2>
                                         <p className="text-lg leading-relaxed text-slate-700 mt-4">
                                             {notice.description}
+
                                         </p>
                                     </div>
 
@@ -117,7 +118,7 @@ export default function ProjectNotice() {
                                             </div>
                                         </div>
                                     )}
-                                    
+
                                     <div className="h-px bg-slate-100 my-8" />
                                 </div>
                             ))}
@@ -126,7 +127,7 @@ export default function ProjectNotice() {
                                 <p className="text-center text-slate-400 py-12 italic">Currently, there are no project notices published for F.Y. 2026-27.</p>
                             )}
 
-                             {/* Footer Note and other static elements... */}
+                            {/* Footer Note and other static elements... */}
 
                             {/* Footer Note */}
                             <div className="bg-slate-900 text-white p-8 rounded-2xl relative overflow-hidden">
@@ -141,13 +142,13 @@ export default function ProjectNotice() {
                                     </Link>
                                 </div>
 
-                                  <div className="relative z-10 mt-10">
-                                <p className="mb-6">
-                                    <span className="font-bold text-xl mr-2">Note :</span>
-                                    <span className="text-slate-300 leading-relaxed mb-6">
-                                    We are not End-users. We supply the Business on a Retainership. Our consultation charges are applicable.
-                                    </span>
-                                </p>
+                                <div className="relative z-10 mt-10">
+                                    <p className="mb-6">
+                                        <span className="font-bold text-xl mr-2">Note :</span>
+                                        <span className="text-slate-300 leading-relaxed mb-6">
+                                            We are not End-users. We supply the Business on a Retainership. Our consultation charges are applicable.
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
 
