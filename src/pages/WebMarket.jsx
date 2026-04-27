@@ -63,53 +63,54 @@ const WebMarket = () => {
         const fallbackMessage = activeTab === 'end-user' 
           ? `END-USER CLIENT ENQUIRY
 ----------------------------------------
+CLIENT DETAILS:
+Name: ${form.name}
+Email: ${form.email}
 Contact Number: ${form.contactNo}
-Address: ${form.address || form.businessAddress}
+Address: ${form.address}
 Website URL: ${form.website || 'N/A'}
 
-REQUIREMENTS
-----------------------------------------
-Category: ${form.category || 'N/A'}
-Business Nature: ${form.natureOfBusiness || 'N/A'}
-Budget: ${form.budget || 'N/A'}
-Tenure: ${form.tenureRequired || 'N/A'}
+REQUIREMENTS:
+Category: ${form.category}
+Nature of Profession: ${form.natureOfBusiness || 'N/A'}
 IT Services Required: ${form.itServicesRequired.length > 0 ? form.itServicesRequired.join(', ') : 'None'}
 Other Services: ${form.otherService || 'None'}
+Service Tenure: ${form.tenureRequired || 'N/A'}
+Client Budget: ${form.budget || 'N/A'}
 
-Membership Selected: ${form.membershipType}`
+MEMBERSHIP & AUTHORIZATION:
+Membership: ${form.membershipType}
+Authorized Official: ${form.authorizedOfficial}
+Assess Code: ${form.assessCode}`
           : `SERVICE PROVIDER ENQUIRY
 ----------------------------------------
+PROVIDER DETAILS:
+Business Name: ${form.name}
+Email: ${form.email}
 Contact Number: ${form.contactNo}
-Address: ${form.address || form.businessAddress}
+Registered Address: ${form.businessAddress}
 Website URL: ${form.websiteUrl || 'N/A'}
 
-PROVIDER DETAILS
-----------------------------------------
-Staff Strength: ${form.technicalStaffCount || 'N/A'}
-Payment Terms: ${form.paymentTerms || 'N/A'}
+SERVICE INFO:
+Technical Staff Strength: ${form.technicalStaffCount || 'N/A'}
 IT Services Offered: ${form.itServicesOffered.length > 0 ? form.itServicesOffered.join(', ') : 'None'}
 Other Services: ${form.otherServices || 'None'}
+Payment Terms & Conditions: ${form.paymentTerms || 'N/A'}
 
-Membership Selected: ${form.membershipType}`;
+MEMBERSHIP & AUTHORIZATION:
+Membership: ${form.membershipType}
+Authorized Official: ${form.authorizedOfficial}
+Assess Code: ${form.assessCode}`;
 
         const emailPayload = {
+          to: 'hcparekh.associates@gmail.com',
           name: form.name,
           email: form.email,
-          subject: activeTab === 'end-user' ? 'webmarket_enduser' : 'webmarket_provider',
+          subject: activeTab === 'end-user' ? 'Web Market: End-User Client Enquiry' : 'Web Market: Service Provider Enquiry',
           message: fallbackMessage,
           webMarketData: {
-            contact: form.contactNo,
-            address: form.address || form.businessAddress,
-            website: activeTab === 'end-user' ? form.website : form.websiteUrl,
-            category: form.category || 'N/A',
-            natureOfBusiness: form.natureOfBusiness || 'N/A',
-            technicalStaffCount: form.technicalStaffCount || 'N/A',
-            services: activeTab === 'end-user' ? form.itServicesRequired.join(', ') : form.itServicesOffered.join(', '),
-            otherServices: form.otherService || form.otherServices || 'None',
-            budget: form.budget || 'N/A',
-            tenure: form.tenureRequired || 'N/A',
-            paymentTerms: form.paymentTerms || 'N/A',
-            membership: form.membershipType
+            ...form,
+            type: activeTab
           }
         };
         await fetch('https://hcparekh.com/php/send_email.php', {
