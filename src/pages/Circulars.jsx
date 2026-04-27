@@ -142,27 +142,37 @@ const Circulars = () => {
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <button
-                              onClick={() => window.open(circular.pdfUrl, '_blank')}
+                            <a
+                              href={circular.pdfUrl || '#'}
+                              target={circular.pdfUrl ? "_blank" : "_self"}
+                              rel="noopener noreferrer"
+                              onClick={(e) => {
+                                if (!circular.pdfUrl) {
+                                  e.preventDefault();
+                                  alert('No PDF document is attached to this circular.');
+                                }
+                              }}
                               className="flex items-center gap-2 px-6 py-2.5 bg-white border border-slate-200 text-xs font-black text-slate-900 rounded-xl hover:bg-slate-50 hover:border-rose-300 transition-all shadow-sm"
                             >
                               <ArrowRight size={16} />
                               VIEW
-                            </button>
+                            </a>
   
-                            <button
-                              onClick={() => {
-                                const link = document.createElement('a');
-                                link.href = circular.pdfUrl;
-                                link.target = '_blank';
-                                // For printing, we usually just open it, but we can call it print
-                                link.click();
+                            <a
+                              href={circular.pdfUrl || '#'}
+                              target={circular.pdfUrl ? "_blank" : "_self"}
+                              rel="noopener noreferrer"
+                              onClick={(e) => {
+                                if (!circular.pdfUrl) {
+                                  e.preventDefault();
+                                  alert('No PDF document is attached to this circular.');
+                                }
                               }}
                               className="flex items-center gap-2 px-6 py-2.5 bg-rose-600 text-white text-xs font-black rounded-xl hover:bg-rose-700 transition-all shadow-lg shadow-rose-100"
                             >
                               <Printer size={16} />
                               PRINT
-                            </button>
+                            </a>
                           </div>
                         </div>
                       </motion.div>
