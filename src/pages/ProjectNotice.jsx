@@ -59,7 +59,7 @@ export default function ProjectNotice() {
                             {notices.map((notice, nIdx) => (
                                 <div key={notice._id || nIdx} className="space-y-8 animate-in fade-in duration-500">
                                     <div className="prose prose-slate max-w-none">
-                                        <h2 className="text-2xl font-bold text-slate-900 border-l-4 border-rose-600 pl-4">{notice.title}</h2>
+                                        <h2 className="text-xl font-bold text-slate-900 border-l-4 border-rose-600 pl-4">{notice.title}</h2>
                                         <p className="text-lg leading-relaxed text-slate-700 mt-4">
                                             {notice.description}
 

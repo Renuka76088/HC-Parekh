@@ -60,7 +60,7 @@ export default function CorporateTenders() {
 
                                     return (
                                         <div key={tender._id || idx} className="w-full">
-                                            <h2 className="text-2xl md:text-2xl font-bold text-[#0f172a] mb-6 uppercase tracking-tight">
+                                            <h2 className="text-xl font-bold text-[#0f172a] mb-6 uppercase tracking-tight">
                                                 {tender.title}
                                             </h2>
 
