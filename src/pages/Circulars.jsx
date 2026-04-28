@@ -160,6 +160,13 @@ const Circulars = () => {
                                   alert('No PDF document is attached to this circular.');
                                   return;
                                 }
+
+                                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+                                if (isMobile) {
+                                  window.open(pdfLink, '_blank');
+                                  return;
+                                }
+
                                 try {
                                   const response = await fetch(pdfLink);
                                   const blob = await response.blob();
@@ -171,20 +178,22 @@ const Circulars = () => {
                                   document.body.appendChild(iframe);
                                   
                                   iframe.onload = () => {
-                                    iframe.contentWindow.print();
+                                    try {
+                                      iframe.contentWindow.print();
+                                    } catch (printError) {
+                                      console.error('Print failed in iframe:', printError);
+                                      window.open(pdfLink, '_blank');
+                                    }
                                     setTimeout(() => {
-                                      document.body.removeChild(iframe);
+                                      if (document.body.contains(iframe)) {
+                                        document.body.removeChild(iframe);
+                                      }
                                       URL.revokeObjectURL(blobUrl);
                                     }, 100000);
                                   };
                                 } catch (error) {
                                   console.error('Error printing PDF:', error);
-                                  const printWindow = window.open(pdfLink, '_blank');
-                                  if (printWindow) {
-                                    printWindow.onload = () => {
-                                      printWindow.print();
-                                    };
-                                  }
+                                  window.open(pdfLink, '_blank');
                                 }
                               }}
                               className="flex items-center gap-2 px-6 py-2.5 bg-rose-600 text-white text-xs font-black rounded-xl hover:bg-rose-700 transition-all shadow-lg shadow-rose-100"
