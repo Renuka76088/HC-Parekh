@@ -90,7 +90,7 @@ export default function OurHiring() {
                                             </div>
 
                                             <p className="text-slate-500 font-medium mb-6">
-                                                Date of Publish {formatDate(job.createdAt)}.
+                                                Date of Publish {job.publishDate || formatDate(job.createdAt)}
                                             </p>
 
                                             {/* Job Description Section */}

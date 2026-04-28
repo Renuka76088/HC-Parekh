@@ -130,6 +130,9 @@ const Circulars = () => {
                             <h3 className="text-xl font-bold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors mb-1">
                               {circular.subject}
                             </h3>
+                            <p className="text-slate-500 font-medium text-xs mb-1">
+                              Date of Publish {circular.publishDate || formatDate(circular.createdAt)}
+                            </p>
                             <p className="text-[10px] font-black text-rose-400 uppercase tracking-widest">Official Document Attached</p>
                           </div>
 
@@ -150,21 +153,45 @@ const Circulars = () => {
                               VIEW
                             </a>
   
-                            <a
-                              href={pdfLink || '#'}
-                              target={pdfLink ? "_blank" : "_self"}
-                              rel="noopener noreferrer"
-                              onClick={(e) => {
+                            <button
+                              onClick={async (e) => {
+                                e.preventDefault();
                                 if (!pdfLink) {
-                                  e.preventDefault();
                                   alert('No PDF document is attached to this circular.');
+                                  return;
+                                }
+                                try {
+                                  const response = await fetch(pdfLink);
+                                  const blob = await response.blob();
+                                  const blobUrl = URL.createObjectURL(blob);
+                                  
+                                  const iframe = document.createElement('iframe');
+                                  iframe.style.display = 'none';
+                                  iframe.src = blobUrl;
+                                  document.body.appendChild(iframe);
+                                  
+                                  iframe.onload = () => {
+                                    iframe.contentWindow.print();
+                                    setTimeout(() => {
+                                      document.body.removeChild(iframe);
+                                      URL.revokeObjectURL(blobUrl);
+                                    }, 100000);
+                                  };
+                                } catch (error) {
+                                  console.error('Error printing PDF:', error);
+                                  const printWindow = window.open(pdfLink, '_blank');
+                                  if (printWindow) {
+                                    printWindow.onload = () => {
+                                      printWindow.print();
+                                    };
+                                  }
                                 }
                               }}
                               className="flex items-center gap-2 px-6 py-2.5 bg-rose-600 text-white text-xs font-black rounded-xl hover:bg-rose-700 transition-all shadow-lg shadow-rose-100"
                             >
                               <Printer size={16} />
                               PRINT
-                            </a>
+                            </button>
                           </div>
                         </div>
                       </motion.div>
