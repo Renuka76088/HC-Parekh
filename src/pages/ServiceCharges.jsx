@@ -1,12 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
 import { IndianRupee, FileText, Scale, Info } from 'lucide-react';
+import { contentApi } from '../api';
 
 export default function ServiceCharges() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [data, setData] = useState({
+        heroTitle: 'Service Charges',
+        heroDescription: 'Understanding our fee structure and professional charges.',
+        variableFeeTitle: 'Variable Fee Structure',
+        variableFeeDescription: 'Our Service charges are subject to the nature of Services, Consultation, and Projects. It varies from Sector to Sector, Industry to Industry, as well as the Service Tenure and Professional Responsibilities involved.',
+        noticeTitle: 'Specific Advertisements',
+        noticeDescription: 'Our Service Charges are generally clearly mentioned in our each of the Advertisements and Notices for the specific works, tenure, and jurisdiction. Please refer to the specific project documentation for detailed pricing information.'
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCharges = async () => {
+            try {
+                const res = await contentApi.getServiceCharges();
+                if (res.data) {
+                    setData(res.data);
+                }
+            } catch (err) {
+                console.error('Error fetching service charges:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchCharges();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+                <div className="w-10 h-10 border-4 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-50/50 font-sans text-slate-800">
@@ -30,9 +64,9 @@ export default function ServiceCharges() {
                                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-xs font-semibold mb-4 backdrop-blur-sm border border-white/10">
                                     <IndianRupee size={14} className="text-amber-400" /> Transparent Pricing
                                 </div>
-                                <h1 className="text-3xl md:text-5xl font-black mb-4">Service Charges</h1>
+                                <h1 className="text-3xl md:text-5xl font-black mb-4">{data.heroTitle}</h1>
                                 <p className="text-slate-400 text-lg max-w-2xl">
-                                    Understanding our fee structure and professional charges.
+                                    {data.heroDescription}
                                 </p>
                             </div>
                         </div>
@@ -45,13 +79,12 @@ export default function ServiceCharges() {
                                 <div className="p-4 bg-amber-50 rounded-2xl text-amber-600 hidden md:block">
                                     <Scale size={32} />
                                 </div>
-                                <div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Variable Fee Structure</h3>
-                                    <p className="text-lg text-slate-700 leading-relaxed">
-                                        Our Service charges are subject to the nature of <span className="font-semibold text-slate-900">Services, Consultation, and Projects</span>.
-                                        It varies from <span className="text-amber-700 font-medium">Sector to Sector</span>, <span className="text-amber-700 font-medium">Industry to Industry</span>,
-                                        as well as the Service Tenure and Professional Responsibilities involved.
-                                    </p>
+                                <div className="space-y-4">
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3">{data.variableFeeTitle}</h3>
+                                    <div 
+                                        className="text-lg text-slate-700 leading-relaxed quill-content"
+                                        dangerouslySetInnerHTML={{ __html: (data.variableFeeDescription || '').replace(/&nbsp;/g, ' ') }}
+                                    />
                                 </div>
                             </div>
 
@@ -65,12 +98,14 @@ export default function ServiceCharges() {
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <Info size={18} className="text-slate-400" />
-                                        <h3 className="text-lg font-bold text-slate-900">Specific Advertisements</h3>
+                                        <h3 className="text-lg font-bold text-slate-900">{data.noticeTitle}</h3>
                                     </div>
-                                    <p className="text-slate-600 leading-relaxed">
-                                        Our Service Charges are generally clearly mentioned in our each of the <span className="font-semibold text-slate-900">Advertisements and Notices</span> for the specific works, tenure, and jurisdiction.
-                                        Please refer to the specific project documentation for detailed pricing information.
-                                    </p>
+                                    <div className="space-y-4">
+                                        <div 
+                                            className="text-slate-600 leading-relaxed quill-content"
+                                            dangerouslySetInnerHTML={{ __html: (data.noticeDescription || '').replace(/&nbsp;/g, ' ') }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 

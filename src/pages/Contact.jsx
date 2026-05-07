@@ -177,22 +177,19 @@ export default function Contact() {
                                     <Mail className="text-rose-500" /> Email Contacts
                                 </h3>
                                 <div className="grid gap-4">
-                                    {[
-                                        { type: "Appointment", email: contactData?.emails?.appointment || "appointment@hcparekh.com" },
-                                        { type: "Project Services", email: contactData?.emails?.services || "services@hcparekh.com" }
-                                    ].map((contact, idx) => (
+                                    {(Array.isArray(contactData?.emails) ? contactData.emails : [
+                                        contactData?.emails?.appointment?.[0] || "appointment@hcparekh.com",
+                                        contactData?.emails?.services?.[0] || "services@hcparekh.com"
+                                    ].filter(Boolean)).map((email, idx) => (
                                         <a
                                             key={idx}
-                                            href={`mailto:${contact.email}`}
-                                            className="flex items-center gap-2 md:gap-4 p-5 px-2 rounded-xl border border-slate-100 bg-rose-50/50 hover:bg-rose-50 transition-colors group"
+                                            href={`mailto:${email}`}
+                                            className="flex items-center gap-2 md:gap-4 p-5 px-4 rounded-xl border border-slate-100 bg-rose-50/50 hover:bg-rose-50 transition-colors group"
                                         >
-                                            <div className="p-3 bg-white text-rose-600 rounded-full shadow-sm group-hover:scale-110 transition-transform">
+                                            <div className="p-3 bg-white text-rose-600 rounded-full shadow-sm group-hover:scale-110 transition-transform shrink-0">
                                                 <Mail size={20} />
                                             </div>
-                                            <div>
-                                                <p className="text-xs font-bold text-rose-800 uppercase tracking-wider">{contact.type}</p>
-                                                <p className="text-slate-700 font-medium break-all">{contact.email}</p>
-                                            </div>
+                                            <p className="text-slate-700 font-medium break-all">{email}</p>
                                         </a>
                                     ))}
                                     <p className="text-xs text-slate-500 italic mt-2 ml-1">

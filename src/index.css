@@ -63,9 +63,17 @@ body {
 
 /* Rich Text Content Styles */
 .quill-content {
-  word-break: normal;
-  overflow-wrap: break-word;
-  overflow-x: hidden;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  white-space: normal !important;
+  hyphens: none !important;
+  text-align: left;
+}
+
+.quill-content p, .quill-content span, .quill-content strong, .quill-content em {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
 }
 
 .quill-content * {
@@ -81,6 +89,10 @@ body {
 .quill-content h1 { font-size: 1.5rem; }
 .quill-content h2 { font-size: 1.25rem; }
 .quill-content h3 { font-size: 1.125rem; }
+
+.quill-content p:last-child {
+  margin-bottom: 0;
+}
 
 .quill-content p {
   margin-bottom: 1rem;
@@ -105,7 +117,7 @@ body {
 
 .quill-content strong {
   font-weight: 700;
-  color: #0f172a;
+  color: inherit;
 }
 
 .quill-content em {

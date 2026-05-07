@@ -85,7 +85,10 @@ export default function CorporateMOU() {
                                             <div>
                                                 <h3 className={`text-2xl font-bold ${theme.title}`}>{mou.title}</h3>
                                                 {mou.description && (
-                                                    <p className={`text-sm font-bold uppercase tracking-wider ${theme.subtitle}`}>{mou.description}</p>
+                                                    <div 
+                                                        className={`text-sm font-bold uppercase tracking-wider ${theme.subtitle} quill-content`}
+                                                        dangerouslySetInnerHTML={{ __html: (mou.description || '').replace(/&nbsp;/g, ' ') }}
+                                                    />
                                                 )}
                                             </div>
                                         </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.hcparekh.com/api/';
+const API_BASE_URL = 'http://localhost:5006/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -13,6 +13,8 @@ export const contentApi = {
   getServices: () => api.get('content/services'),
   getAbout: () => api.get('content/about'),
   getContact: () => api.get('content/contact'),
+  getServiceCharges: () => api.get('content/service-charges'),
+  getNoticeSettings: () => api.get('content/notice-settings'),
 };
 
 export const corporateApi = {

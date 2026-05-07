@@ -65,9 +65,10 @@ export default function CorporateTenders() {
                                             </h2>
 
                                             {tender.description && (
-                                                <h3 className="text-xl text-[#0f172a] mb-6">
-                                                    {tender.description}
-                                                </h3>
+                                                <div 
+                                                    className="text-xl text-[#0f172a] mb-6 quill-content"
+                                                    dangerouslySetInnerHTML={{ __html: (tender.description || '').replace(/&nbsp;/g, ' ') }}
+                                                />
                                             )}
 
                                             <div className="space-y-3">
