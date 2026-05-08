@@ -33,6 +33,7 @@ export const webMarketApi = {
 export const workforceApi = {
   getTeam: () => api.get('workforce/team'),
   getVacancies: () => api.get('workforce/vacancies'),
+  getSettings: () => api.get('workforce/team-settings'),
 };
 
 export default api;
